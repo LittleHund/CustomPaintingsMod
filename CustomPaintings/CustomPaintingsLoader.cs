@@ -12,6 +12,7 @@ namespace CustomPaintings
         private const string IMAGE_FOLDER_NAME = "CustomPaintings";
         private readonly Logger logger;
 
+        public Dictionary<string, List<Material>> MaterialGroups = new Dictionary<string, List<Material>>();
 
         // Loaded materials list
         public List<Material> LoadedMaterials { get; } = new List<Material>();
@@ -101,6 +102,48 @@ namespace CustomPaintings
             if (ImageConversion.LoadImage(texture, fileData))
             {
                 texture.Apply();
+
+                float aspectRatio = (float)texture.width / texture.height;
+                if (aspectRatio >= 0.769f && aspectRatio <= 1.3f)
+                {
+                    if (!MaterialGroups.ContainsKey("Square"))
+                    {
+                        MaterialGroups["Square"] = new List<Material>(); // Create if not exists
+                    }
+
+                    Material material = new Material(Shader.Find("Standard"));
+                    material.mainTexture = texture;
+                    MaterialGroups["Square"].Add(material);  // Add material to Square group
+
+                }
+                else if (aspectRatio > 1.3f)
+                {
+                    if (!MaterialGroups.ContainsKey("Landscape"))
+                    {
+                        MaterialGroups["Landscape"] = new List<Material>(); // Create if not exists
+                    }
+
+                    Material material = new Material(Shader.Find("Standard"));
+                    material.mainTexture = texture;
+                    MaterialGroups["Landscape"].Add(material);  // Add material to Landscape group
+ 
+                }
+                else if (aspectRatio < 0.769f)
+                {
+                    if (!MaterialGroups.ContainsKey("Portrait"))
+                    {
+                        MaterialGroups["Portrait"] = new List<Material>(); // Create if not exists
+                    }
+
+                    Material material = new Material(Shader.Find("Standard"));
+                    material.mainTexture = texture;
+                    MaterialGroups["Portrait"].Add(material);  // Add material to Portrait group
+                    
+                }
+
+
+
+                
                 return texture;
             }
             return null;

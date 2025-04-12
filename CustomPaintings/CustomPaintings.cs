@@ -23,7 +23,7 @@ namespace CustomPaintings
         public static int? receivedSeed = null;
         public static readonly int maxWaitTimeMs = 1000; // Max wait time for seed
 
-        internal static ConfigEntry<bool> SeperateImages;
+        public static ConfigEntry<bool> SeperateImages;
 
 
         private readonly Harmony harmony = new Harmony("UnderratedJunk.CustomPaintings");
