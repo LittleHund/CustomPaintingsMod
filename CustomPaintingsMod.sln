@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomPaintings", "Potatatatatata\CustomPaintings.csproj", "{FAC18163-DF0C-4F75-A102-76906AF69990}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomPaintings", "CustomPaintings\CustomPaintings.csproj", "{FAC18163-DF0C-4F75-A102-76906AF69990}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
