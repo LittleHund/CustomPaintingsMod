@@ -78,10 +78,10 @@ namespace CustomPaintings
                         ReceivedSeed = receivedSeed.Value;
                         receivedSeed = null;
                     }
-                    else
+                    /*else
                     {
                         logger.LogWarning("[Postfix] Client did not receive seed in time. Proceeding without it.");
-                    }
+                    }*/
 
                     swapper.ReplacePaintings();
                 });
@@ -112,6 +112,15 @@ namespace CustomPaintings
 
                     sync.SendSeed(HostSeed);
 
+                    if (SeperateImages.Value == true)
+                    {
+                        sync.SendSeperateState("on");
+                    }
+
+                    else if (SeperateImages.Value == false)
+                    {
+                        sync.SendSeperateState("off");
+                    }
 
                 }                
             }           
@@ -156,7 +165,7 @@ namespace CustomPaintings
                 PhotonNetwork.RemoveCallbackTarget(sync); // Unsubscribe to Photon events
 
                 swapper.SetState(CustomPaintingsSwap.ModState.SinglePlayer);
-
+                SeperateState = "Singleplayer";
             }
         }
     }

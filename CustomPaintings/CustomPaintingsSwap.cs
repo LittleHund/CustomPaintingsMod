@@ -27,6 +27,7 @@ namespace CustomPaintings
         public static int HostSeed = 0;         // Seed for random image selection as host
         public static int ReceivedSeed = 0;     // Seed for random image selection received from host
         public static int Seed = 0;
+        public static string SeperateState = "Singleplayer";
 
         private int paintingsChangedCount = 0;  // Counter for how many paintings were changed
 
@@ -119,7 +120,7 @@ namespace CustomPaintings
 
             int materialsChecked = 0;  // Count materials checked in the scene
 
-            if (CustomPaintings.SeperateImages.Value == false)
+            if (CustomPaintings.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off")
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -144,8 +145,6 @@ namespace CustomPaintings
                                     continue; // Skip this material
                                 }
 
-
-
                                 if (loader.LoadedMaterials.Count > 0)
                                 {
 
@@ -163,7 +162,7 @@ namespace CustomPaintings
                     }
                 }
             }
-            else if (CustomPaintings.SeperateImages.Value == true)
+            else if (CustomPaintings.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on")
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -226,11 +225,6 @@ namespace CustomPaintings
 
                 // Log how many paintings were changed in this scene
                 logger.LogInfo($"Total paintings changed in this scene: {paintingsChangedCount}");
-
-
-                logger.LogInfo($"RandomSeed = {randomSeed}");
-                logger.LogInfo($"HostSeed = {HostSeed}");
-                logger.LogInfo($"ReceivedSeed = {ReceivedSeed}");
             }
         }
 

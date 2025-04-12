@@ -15,7 +15,7 @@ namespace CustomPaintings
        
         private readonly Logger logger;
         public const byte SeedEventCode = 1;
-
+        public const byte SeperateStateCode = 2;
 
 
         public CustomPaintingsSync(Logger logger)
@@ -25,8 +25,6 @@ namespace CustomPaintings
 
         public void SendSeed(int seed)
         {
-
-
             // Create an event data object that will carry the seed information
             object[] content = new object[] { seed };
 
@@ -43,6 +41,27 @@ namespace CustomPaintings
 
         }
 
+        public void SendSeperateState(string toggle)
+        {
+
+
+            // Create an event data object that will carry the seed information
+            object[] content = new object[] { toggle };
+
+            logger.LogInfo("sharing seperation setting");
+
+            RaiseEventOptions options = new RaiseEventOptions
+            {
+                Receivers = ReceiverGroup.All, // Send to everyone, including yourself
+                CachingOption = EventCaching.AddToRoomCache
+            };
+
+            // Raise the event to all clients (using the custom event code)
+            PhotonNetwork.RaiseEvent(SeperateStateCode, content, options, SendOptions.SendReliable);
+
+        }
+
+
 
         public void OnEvent(EventData photonEvent)
         {
@@ -54,6 +73,16 @@ namespace CustomPaintings
                 logger.LogInfo($"Received seed: {seed}");
                 ReceivedSeed = seed;
             }
+
+            if (photonEvent.Code == SeperateStateCode)
+            {
+                object[] data = (object[])photonEvent.CustomData;
+                string toggle = (string)data[0];
+
+                logger.LogInfo($"Received seperate state: {toggle}");
+                SeperateState = toggle;
+            }
+
         }
     }
 }
