@@ -1,0 +1,8 @@
+separate images into:
+- square
+- landscape
+- portrait
+
+squish proportions between 1:1 and 1.3:1/1:1.3
+
+add button to separate into these 3 or use and squish all
