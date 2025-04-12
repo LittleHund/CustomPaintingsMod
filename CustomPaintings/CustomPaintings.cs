@@ -86,8 +86,7 @@ namespace CustomPaintings
                     swapper.ReplacePaintings();
                 });
 
-                // Call swapper to perform the painting replacement logic
-                //swapper.ReplacePaintings();
+
 
 
             }
