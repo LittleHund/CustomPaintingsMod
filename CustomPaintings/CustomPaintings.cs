@@ -12,7 +12,7 @@ using System;
 
 namespace CustomPaintings
 {
-    [BepInPlugin("UnderratedJunk.CustomPaintings", "CustomPaintings", "1.0.7")]
+    [BepInPlugin("UnderratedJunk.CustomPaintings", "CustomPaintings", "1.0.8")]
     public class CustomPaintings : BaseUnityPlugin
     {
         private static Logger logger;  // Logger instance
