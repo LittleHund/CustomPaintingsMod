@@ -51,12 +51,14 @@ namespace CustomPaintings
         { "PaintingMedium", "Landscape" },
         { "Painting_Danish_Flag", "Landscape" },
         { "Painting_Board", "Landscape" },
+        { "Shop_Outside_Billboard_Ad", "Landscape" },
 
         // Square group
         { "Painting_S_Creep", "Square" },
         { "Painting_S_Creep 2_0", "Square" },
         { "Painting_S_Creep 2", "Square" },
         { "Painting Wizard Class", "Square" },
+        { "Picture_Frame_-_Picture_01", "Square"},
 
         // Portrait group
         { "Painting_V_jannk", "Portrait" },
@@ -68,7 +70,13 @@ namespace CustomPaintings
         { "painting teacher03", "Portrait" },
         { "painting teacher04", "Portrait" },
         { "Painting_S_Tree", "Portrait" },
-        { "Painting_Calendar", "Portrait" }
+        { "Painting_Calendar", "Portrait" },
+        { "Magazine01", "Portrait" },
+        { "Magazine02", "Portrait" },
+        { "Magazine03", "Portrait" },
+        { "Magazine04", "Portrait" },
+        { "Magazine05", "Portrait" },
+        { "Valuable_Painting", "Portrait" }
         };
 
         //check the current modstate of the mod
