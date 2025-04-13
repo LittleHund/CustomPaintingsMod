@@ -19,7 +19,8 @@ namespace CustomPaintings
         private static Logger logger;                   
         private static CustomPaintingsLoader loader;    
         private static CustomPaintingsSwap swapper;     
-        private static CustomPaintingsSync sync;        
+        private static CustomPaintingsSync sync;
+        private static CustomPaintingsGroupList grouper;
 
         public static int? receivedSeed = null;
         public static readonly int maxWaitTimeMs = 1000; // Max wait time for seed
@@ -44,8 +45,11 @@ namespace CustomPaintings
             loader = new CustomPaintingsLoader(logger);
             loader.LoadImagesFromAllPlugins();
 
+            // Initialize grouper , pass logger as dependency
+            grouper = new CustomPaintingsGroupList(logger);
+
             // Initialize Swapper last, pass loader as dependency
-            swapper = new CustomPaintingsSwap(logger, loader);
+            swapper = new CustomPaintingsSwap(logger, loader, grouper);
 
             // Initialize syncer
             sync = new CustomPaintingsSync(logger);

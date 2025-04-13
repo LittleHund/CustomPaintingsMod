@@ -22,6 +22,7 @@ namespace CustomPaintings
 
         private readonly Logger logger;
         private readonly CustomPaintingsLoader loader;
+        private readonly CustomPaintingsGroupList grouper;
 
         //create seed variables
         private static int randomSeed = 0;      
@@ -39,45 +40,8 @@ namespace CustomPaintings
         private int PortraitChangedCount = 0;  
 
         // Default to Singleplayer
-        private static ModState currentState = ModState.SinglePlayer; 
+        private static ModState currentState = ModState.SinglePlayer;
 
-        //add groups to dictionary
-        private static readonly Dictionary<string, string> MaterialNameToGroup = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-        // Landscape group
-        { "Painting_H_Landscape", "Landscape" },
-        { "Painting_H_crow", "Landscape" },
-        { "Painting_H_crow_0", "Landscape" },
-        { "PaintingMedium", "Landscape" },
-        { "Painting_Danish_Flag", "Landscape" },
-        { "Painting_Board", "Landscape" },
-        { "Shop_Outside_Billboard_Ad", "Landscape" },
-
-        // Square group
-        { "Painting_S_Creep", "Square" },
-        { "Painting_S_Creep 2_0", "Square" },
-        { "Painting_S_Creep 2", "Square" },
-        { "Painting Wizard Class", "Square" },
-        { "Picture_Frame_-_Picture_01", "Square"},
-
-        // Portrait group
-        { "Painting_V_jannk", "Portrait" },
-        { "Painting_V_Furman", "Portrait" },
-        { "Painting_V_surrealistic", "Portrait" },
-        { "Painting_V_surrealistic_0", "Portrait" },
-        { "painting teacher01", "Portrait" },
-        { "painting teacher02", "Portrait" },
-        { "painting teacher03", "Portrait" },
-        { "painting teacher04", "Portrait" },
-        { "Painting_S_Tree", "Portrait" },
-        { "Painting_Calendar", "Portrait" },
-        { "Magazine01", "Portrait" },
-        { "Magazine02", "Portrait" },
-        { "Magazine03", "Portrait" },
-        { "Magazine04", "Portrait" },
-        { "Magazine05", "Portrait" },
-        { "Valuable_Painting", "Portrait" }
-        };
 
         //check the current modstate of the mod
         public ModState GetModState()
@@ -86,10 +50,11 @@ namespace CustomPaintings
         }
 
         // Constructor to initialize the logger and loader
-        public CustomPaintingsSwap(Logger logger, CustomPaintingsLoader loader)
+        public CustomPaintingsSwap(Logger logger, CustomPaintingsLoader loader, CustomPaintingsGroupList grouper)
         {
             this.logger = logger;
             this.loader = loader; // Initialize loader instance
+            this.grouper = grouper;
 
             // Log the current state on initialization
             logger.LogInfo($"Initial ModState: {currentState}");
@@ -208,7 +173,7 @@ namespace CustomPaintings
 
                                 string matName = materials[i].name.Trim();
 
-                                if (MaterialNameToGroup.TryGetValue(matName, out string groupName))
+                                if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out string groupName))
                                 {
                                     if (groupName == "Landscape")
                                     {
