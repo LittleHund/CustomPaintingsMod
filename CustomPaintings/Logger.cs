@@ -29,6 +29,13 @@ namespace CustomPaintings
         }
 
         // Log general information
+        public void LogDebug(string message)
+        {
+            WriteLog("DEBUG", message);
+            logSource.LogDebug(message);
+        }
+
+        // Log general information
         public void LogInfo(string message)
         {
             WriteLog("INFO", message);
