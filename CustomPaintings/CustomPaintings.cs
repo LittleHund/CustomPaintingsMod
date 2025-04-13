@@ -27,8 +27,6 @@ namespace CustomPaintings
         //button and slider creation
         public static ConfigEntry<bool> SeperateImages;
         public static ConfigEntry<bool> HostControl;
-        public static ConfigEntry<bool> GrungeState;
-        public static ConfigEntry<float> GrungeIntensity;
 
         private readonly Harmony harmony = new Harmony("UnderratedJunk.CustomPaintings");
 
@@ -40,6 +38,9 @@ namespace CustomPaintings
             logger = new Logger("CustomPaintings");
             logger.LogInfo("CustomPaintings mod initialized.");
 
+            // Initialize configurable settings
+            CustomPaintingsConfig.Init(Config);
+
             // Initialize Loader second
             loader = new CustomPaintingsLoader(logger);
             loader.LoadImagesFromAllPlugins();
@@ -50,12 +51,10 @@ namespace CustomPaintings
             // Initialize syncer
             sync = new CustomPaintingsSync(logger);
 
+
             // add button and sliders for different settings
             HostControl = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Host Control", true, new ConfigDescription("choose if host controls seperate state"));
             SeperateImages = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Seperate paintings", false, new ConfigDescription("seperate square, landscape and portrait images on swap"));
-
-            GrungeState = ((BaseUnityPlugin)this).Config.Bind<bool>("Grunge", "Grunge state", true);
-            GrungeIntensity = this.Config.Bind<float>("Grunge", "Grunge intensity", 0.50f, new ConfigDescription("change how intense the grunge is applied", (AcceptableValueBase)new AcceptableValueRange<float>(0.01f, 1.00f), Array.Empty<object>()));
 
             harmony.PatchAll();
         }
@@ -131,8 +130,11 @@ namespace CustomPaintings
                         sync.SendSeperateState("off");
                     }
 
-                }                
-            }           
+                }
+
+                // Update 
+                loader.UpdateGrungeMaterialParameters();
+            }
         }
 
         // JoinLobby Patch change to client state
