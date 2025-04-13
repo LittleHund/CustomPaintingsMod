@@ -30,6 +30,10 @@ namespace CustomPaintings
         public static string SeperateState = "Singleplayer";
 
         private int paintingsChangedCount = 0;  // Counter for how many paintings were changed
+        private int LandscapeChangedCount = 0;  // Counter for how many paintings were changed
+        private int SquareChangedCount = 0;  // Counter for how many paintings were changed
+        private int PortraitChangedCount = 0;  // Counter for how many paintings were changed
+
 
         private static ModState currentState = ModState.SinglePlayer; // Default to Singleplayer
 
@@ -194,22 +198,22 @@ namespace CustomPaintings
                                 {
                                     if (groupName == "Landscape")
                                     {
-                                        int index = Mathf.Abs((Seed + paintingsChangedCount) % loader.MaterialGroups["Landscape"].Count);
+                                        int index = Mathf.Abs((Seed + LandscapeChangedCount) % loader.MaterialGroups["Landscape"].Count);
                                         materials[i] = loader.MaterialGroups["Landscape"][index];
-                                        paintingsChangedCount++;  // Increment the count of paintings changed 
+                                        landscapeChangedCount++;  // Increment the count of paintings changed 
 
                                     }
                                     else if (groupName == "Square")
                                     {
-                                        int index = Mathf.Abs((Seed + paintingsChangedCount) % loader.MaterialGroups["Square"].Count);
+                                        int index = Mathf.Abs((Seed + SquareChangedCount) % loader.MaterialGroups["Square"].Count);
                                         materials[i] = loader.MaterialGroups["Square"][index];
-                                        paintingsChangedCount++;  // Increment the count of paintings changed 
+                                        SquareChangedCount++;  // Increment the count of paintings changed 
                                     }
                                     else if (groupName == "Portrait")
                                     {
-                                        int index = Mathf.Abs((Seed + paintingsChangedCount) % loader.MaterialGroups["Portrait"].Count);
+                                        int index = Mathf.Abs((Seed + PortraitChangedCount) % loader.MaterialGroups["Portrait"].Count);
                                         materials[i] = loader.MaterialGroups["Portrait"][index];
-                                        paintingsChangedCount++;  // Increment the count of paintings changed 
+                                        PortraitChangedCount++;  // Increment the count of paintings changed 
                                     }
                                 }
                             }
