@@ -124,7 +124,7 @@ namespace CustomPaintings
 
             int materialsChecked = 0;  // Count materials checked in the scene
 
-            if (CustomPaintings.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off")
+            if (CustomPaintings.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off" && CustomPaintings.HostControll.Value == true || CustomPaintings.HostControll.Value == false && CustomPaintings.SeperateImages.Value == false)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -166,7 +166,7 @@ namespace CustomPaintings
                     }
                 }
             }
-            else if (CustomPaintings.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on")
+            else if (CustomPaintings.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on" && CustomPaintings.HostControll.Value == true || CustomPaintings.HostControll.Value == false && CustomPaintings.SeperateImages.Value == true)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -200,7 +200,7 @@ namespace CustomPaintings
                                     {
                                         int index = Mathf.Abs((Seed + LandscapeChangedCount) % loader.MaterialGroups["Landscape"].Count);
                                         materials[i] = loader.MaterialGroups["Landscape"][index];
-                                        landscapeChangedCount++;  // Increment the count of paintings changed 
+                                        LandscapeChangedCount++;  // Increment the count of paintings changed 
 
                                     }
                                     else if (groupName == "Square")

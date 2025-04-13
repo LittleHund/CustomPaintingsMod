@@ -24,7 +24,7 @@ namespace CustomPaintings
         public static readonly int maxWaitTimeMs = 1000; // Max wait time for seed
 
         public static ConfigEntry<bool> SeperateImages;
-
+        public static ConfigEntry<bool> HostControll;
 
         private readonly Harmony harmony = new Harmony("UnderratedJunk.CustomPaintings");
 
@@ -46,7 +46,7 @@ namespace CustomPaintings
             // Initialize syncer
             sync = new CustomPaintingsSync(logger);
 
-            HostControll = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Host Controll", false, new ConfigDescription("choose if host controlls seperate state"));
+            HostControll = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Host Controll", true, new ConfigDescription("choose if host controlls seperate state"));
             SeperateImages = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Seperate paintings", false, new ConfigDescription("seperate square, landscape and portrait images on swap"));
 
 
