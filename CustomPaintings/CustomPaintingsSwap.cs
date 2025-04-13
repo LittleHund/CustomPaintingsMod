@@ -12,31 +12,36 @@ namespace CustomPaintings
 {
     public class CustomPaintingsSwap
     {
-        // Enum for mod states: host, client, and singleplayer
+        // create different states for the mod
         public enum ModState
         {
-            Host,        // Host state (no action for now)
-            Client,      // Client state (no action for now)
-            SinglePlayer // Singleplayer state (default behavior)
+            Host,        
+            Client,      
+            SinglePlayer 
         }
 
         private readonly Logger logger;
         private readonly CustomPaintingsLoader loader;
 
-        private static int randomSeed = 0;      // Seed for random image selection in singleplayer
-        public static int HostSeed = 0;         // Seed for random image selection as host
-        public static int ReceivedSeed = 0;     // Seed for random image selection received from host
-        public static int Seed = 0;
+        //create seed variables
+        private static int randomSeed = 0;      
+        public static int HostSeed = 0;        
+        public static int ReceivedSeed = 0;     
+        public static int Seed = 0; //seed applied to swap
+
+        //create string used to check if host decides seperation state
         public static string SeperateState = "Singleplayer";
 
-        private int paintingsChangedCount = 0;  // Counter for how many paintings were changed
-        private int LandscapeChangedCount = 0;  // Counter for how many paintings were changed
-        private int SquareChangedCount = 0;  // Counter for how many paintings were changed
-        private int PortraitChangedCount = 0;  // Counter for how many paintings were changed
+        //changed counts for all the painting swaps
+        private int paintingsChangedCount = 0;  
+        private int LandscapeChangedCount = 0;  
+        private int SquareChangedCount = 0;  
+        private int PortraitChangedCount = 0;  
 
+        // Default to Singleplayer
+        private static ModState currentState = ModState.SinglePlayer; 
 
-        private static ModState currentState = ModState.SinglePlayer; // Default to Singleplayer
-
+        //add groups to dictionary
         private static readonly Dictionary<string, string> MaterialNameToGroup = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
         // Landscape group
@@ -66,6 +71,7 @@ namespace CustomPaintings
         { "Painting_Calendar", "Portrait" }
         };
 
+        //check the current modstate of the mod
         public ModState GetModState()
         {
             return currentState;
@@ -113,7 +119,7 @@ namespace CustomPaintings
                 Seed = ReceivedSeed;
             }
 
-
+            //check current scene
             Scene scene = SceneManager.GetActiveScene();
 
             logger.LogInfo($"Applying seed {Seed} for painting swaps in scene: {scene.name}");
@@ -124,7 +130,7 @@ namespace CustomPaintings
 
             int materialsChecked = 0;  // Count materials checked in the scene
 
-            if (CustomPaintings.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off" && CustomPaintings.HostControll.Value == true || CustomPaintings.HostControll.Value == false && CustomPaintings.SeperateImages.Value == false)
+            if (CustomPaintings.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off" && CustomPaintings.HostControl.Value == true || CustomPaintings.HostControl.Value == false && CustomPaintings.SeperateImages.Value == false)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -142,7 +148,7 @@ namespace CustomPaintings
                             if (materials[i] != null && materials[i].name.ToLower().Contains("painting"))
                             {
 
-                                // Exclude specific materials (e.g., frames that we don't want to swap)
+                                // Exclude specific materials
                                 if (materials[i].name.Contains("Painting Frame Vertical Gold") || materials[i].name.Contains("Painting Frame Horizontal Gold"))
                                 {
 
@@ -166,7 +172,7 @@ namespace CustomPaintings
                     }
                 }
             }
-            else if (CustomPaintings.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on" && CustomPaintings.HostControll.Value == true || CustomPaintings.HostControll.Value == false && CustomPaintings.SeperateImages.Value == true)
+            else if (CustomPaintings.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on" && CustomPaintings.HostControl.Value == true || CustomPaintings.HostControl.Value == false && CustomPaintings.SeperateImages.Value == true)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -222,9 +228,7 @@ namespace CustomPaintings
                         }
                     }
                 }
-
-
-                // Log the count of checked materials
+                                
                 logger.LogInfo($"Total materials checked: {materialsChecked}");
 
                 // Log how many paintings were changed in this scene
@@ -236,10 +240,8 @@ namespace CustomPaintings
         public void SetState(ModState newState)
         {
             currentState = newState;
-
-            // Log the current state
+            
             logger.LogInfo($"Mod state set to: {currentState}");
-
         }
     }
 }

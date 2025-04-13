@@ -9,9 +9,12 @@ namespace CustomPaintings
 {
     public class CustomPaintingsLoader
     {
+        //assign dedicated folder name
         private const string IMAGE_FOLDER_NAME = "CustomPaintings";
+
         private readonly Logger logger;
 
+        //create a dictionary for the different image groups
         public Dictionary<string, List<Material>> MaterialGroups = new Dictionary<string, List<Material>>();
 
         // Loaded materials list

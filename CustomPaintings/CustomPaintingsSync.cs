@@ -12,8 +12,10 @@ namespace CustomPaintings
 {
     public class CustomPaintingsSync : MonoBehaviourPunCallbacks, IOnEventCallback
     {
-       
+
         private readonly Logger logger;
+
+        // assign a specific code to different events
         public const byte SeedEventCode = 1;
         public const byte SeperateStateCode = 2;
 
@@ -33,7 +35,7 @@ namespace CustomPaintings
             RaiseEventOptions options = new RaiseEventOptions
             {
                 Receivers = ReceiverGroup.All, // Send to everyone, including yourself
-                CachingOption = EventCaching.AddToRoomCache
+                CachingOption = EventCaching.AddToRoomCache // cache data for late joiners
             };
 
             // Raise the event to all clients (using the custom event code)
@@ -45,7 +47,7 @@ namespace CustomPaintings
         {
 
 
-            // Create an event data object that will carry the seed information
+            // Create an event data object that will carry the seperation state information
             object[] content = new object[] { toggle };
 
             logger.LogInfo("sharing seperation setting");
@@ -53,7 +55,7 @@ namespace CustomPaintings
             RaiseEventOptions options = new RaiseEventOptions
             {
                 Receivers = ReceiverGroup.All, // Send to everyone, including yourself
-                CachingOption = EventCaching.AddToRoomCache
+                CachingOption = EventCaching.AddToRoomCache // cache data for late joiners
             };
 
             // Raise the event to all clients (using the custom event code)
@@ -65,6 +67,7 @@ namespace CustomPaintings
 
         public void OnEvent(EventData photonEvent)
         {
+            //retrieve seed data from event
             if (photonEvent.Code == SeedEventCode)
             {
                 object[] data = (object[])photonEvent.CustomData;
@@ -74,6 +77,7 @@ namespace CustomPaintings
                 ReceivedSeed = seed;
             }
 
+            //retrieve seperation state data from event
             if (photonEvent.Code == SeperateStateCode)
             {
                 object[] data = (object[])photonEvent.CustomData;

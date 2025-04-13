@@ -15,16 +15,20 @@ namespace CustomPaintings
     [BepInPlugin("UnderratedJunk.CustomPaintings", "CustomPaintings", "1.0.8")]
     public class CustomPaintings : BaseUnityPlugin
     {
-        private static Logger logger;  // Logger instance
-        private static CustomPaintingsLoader loader;  // Loader instance
-        private static CustomPaintingsSwap swapper;  // Swapper instance
-        private static CustomPaintingsSync sync;  // Syncer instance
+        // create instances for the different class files
+        private static Logger logger;                   
+        private static CustomPaintingsLoader loader;    
+        private static CustomPaintingsSwap swapper;     
+        private static CustomPaintingsSync sync;        
 
         public static int? receivedSeed = null;
         public static readonly int maxWaitTimeMs = 1000; // Max wait time for seed
 
+        //button and slider creation
         public static ConfigEntry<bool> SeperateImages;
-        public static ConfigEntry<bool> HostControll;
+        public static ConfigEntry<bool> HostControl;
+        public static ConfigEntry<bool> GrungeState;
+        public static ConfigEntry<float> GrungeIntensity;
 
         private readonly Harmony harmony = new Harmony("UnderratedJunk.CustomPaintings");
 
@@ -46,9 +50,12 @@ namespace CustomPaintings
             // Initialize syncer
             sync = new CustomPaintingsSync(logger);
 
-            HostControll = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Host Controll", true, new ConfigDescription("choose if host controlls seperate state"));
+            // add button and sliders for different settings
+            HostControl = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Host Control", true, new ConfigDescription("choose if host controls seperate state"));
             SeperateImages = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Seperate paintings", false, new ConfigDescription("seperate square, landscape and portrait images on swap"));
 
+            GrungeState = ((BaseUnityPlugin)this).Config.Bind<bool>("Grunge", "Grunge state", true);
+            GrungeIntensity = this.Config.Bind<float>("Grunge", "Grunge intensity", 0.50f, new ConfigDescription("change how intense the grunge is applied", (AcceptableValueBase)new AcceptableValueRange<float>(0.01f, 1.00f), Array.Empty<object>()));
 
             harmony.PatchAll();
         }
@@ -67,6 +74,7 @@ namespace CustomPaintings
                     int waited = 0;
                     int interval = 50;
 
+                    // wait to receive a code
                     while (!receivedSeed.HasValue && waited < maxWaitTimeMs)
                     {
                         await Task.Delay(interval);
@@ -77,7 +85,7 @@ namespace CustomPaintings
                     {
                         logger.LogInfo($"[Postfix] Client using received seed: {receivedSeed.Value}");
                         ReceivedSeed = receivedSeed.Value;
-                        receivedSeed = null;
+                        receivedSeed = null; //reset receivedseed for while loop above to work correctly
                     }
                     /*else
                     {
