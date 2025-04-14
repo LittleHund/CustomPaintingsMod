@@ -24,7 +24,7 @@ namespace CustomPaintings
         public List<Material> LoadedMaterials { get; } = new List<Material>();
 
         // Grunge materials (Seperate materials to avoid stretching
-        private const string GRUNGE_ASSET_BUNDLE           = "painting";
+        private const string GRUNGE_ASSET_BUNDLE           = "GrungeAssets";
         private const string MATERIAL_LANDSCAPE_ASSET_NAME = "GrungeHorizontalMaterial";
         private const string MATERIAL_PORTRAIT_ASSET_NAME  = "GrungeVerticalMaterial";
         static Material _LandscapeMaterial;
