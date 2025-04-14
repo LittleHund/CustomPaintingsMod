@@ -34,6 +34,9 @@ namespace CustomPaintings
         //create string used to check if host decides seperation state
         public static string SeperateState = "Singleplayer";
 
+        //create string to check what mode you are in
+        public static string ImageMode = "Normal";
+
         //changed counts for all the painting swaps
         private int paintingsChangedCount = 0;  
         private int LandscapeChangedCount = 0;  
@@ -93,6 +96,15 @@ namespace CustomPaintings
                 Seed = ReceivedSeed;
             }
 
+            if (CustomPaintingsConfig.ChaosMode.Value == true)
+            {
+                ImageMode = "Chaos";
+            }
+            else if (CustomPaintingsConfig.ChaosMode.Value == false)
+            {
+                ImageMode = "Normal";
+            }
+
             //check current scene
             Scene scene = SceneManager.GetActiveScene();
 
@@ -121,7 +133,7 @@ namespace CustomPaintings
                             if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
                             {
 
-                                if (materials[i] != null && groupNames.Contains("Normal"))
+                                if (materials[i] != null && groupNames.Contains(ImageMode))
                                 {
 
                                     // Exclude specific materials
@@ -166,7 +178,7 @@ namespace CustomPaintings
                             if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
                             {
 
-                                if (materials[i] != null && groupNames.Contains("Normal"))
+                                if (materials[i] != null && groupNames.Contains(ImageMode))
                                 {
 
                                     // Exclude specific materials (e.g., frames that we don't want to swap)
