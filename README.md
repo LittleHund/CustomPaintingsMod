@@ -11,9 +11,20 @@ enjoy!!<br>
 this works with multiple different folders in different locations.<br>
 as long as al the folders are named "CustomPaintings" and is withing any (sub)folder within plugins.<br>
 
-<br>
+# Discord
+for questions and ideas join our discord.<br>
+reactions might take a while though.<br>
+https://discord.gg/FB4KmrdgPr<br>
 
 # Updates
+
+<b><i><ins> update 1.1.0 </b></i></ins> <br>
+- added a hostcontrol setting<br>
+- added grunge setting and slider that update realtime<br>
+- grunge intensity is configurable<br>
+- added some magazines and other objects into the change pool<br>
+<br>
+
 
 <b><i><ins> update 1.0.8 </b></i></ins> <br>
 - separation of square, landscape and portrait images now available/supported.<br>
@@ -32,11 +43,6 @@ as long as al the folders are named "CustomPaintings" and is withing any (sub)fo
 <b><i><ins> update 1.0.5 </b></i></ins> <br>
 - now syncs paintings with all clients, as long as exactly the same images are loaded.<br>
 <br>
-
-# Discord
-for questions and ideas join our discord.<br>
-reactions might take a while though.<br>
-https://discord.gg/FB4KmrdgPr
 
 # inspiration/credit
 v1.0.0 of this mod is inspired by RandomPaintingSwap<br>
