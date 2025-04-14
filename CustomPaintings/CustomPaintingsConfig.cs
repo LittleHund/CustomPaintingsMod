@@ -1,14 +1,21 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using System;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 
 namespace CustomPaintings;
 
-internal static class CustomPaintingsConfig
+public class CustomPaintingsConfig
 {
+    public static ConfigEntry<bool> HostControl;
+    public static ConfigEntry<bool> SeperateImages;
+
     internal static class Grunge
     {
+
         internal static ConfigEntry<bool>  State;
         internal static ConfigEntry<float> Intensity;
 
@@ -20,6 +27,10 @@ internal static class CustomPaintingsConfig
 
     internal static void Init(ConfigFile config)
     {
+        // add button and sliders for different settings
+        HostControl = config.Bind<bool>("Image Settings", "Host Control", true, new ConfigDescription("choose if host controls seperate state"));
+        SeperateImages = config.Bind<bool>("Image Settings", "Seperate paintings", false, new ConfigDescription("seperate square, landscape and portrait images on swap"));
+
         Grunge.State = config.Bind
         (
             "Grunge",
@@ -33,7 +44,7 @@ internal static class CustomPaintingsConfig
             "Grunge",
             "Grunge intensity",
             0.50f,
-            new ConfigDescription("change how intense the grunge is applied", new AcceptableValueRange<float>(0.01f, 5.00f), Array.Empty<object>()));
+            new ConfigDescription("change how intense the grunge is applied", new AcceptableValueRange<float>(0.01f, 2.00f), Array.Empty<object>()));
 
         // Advanced config options
         Grunge._BaseColor = config.Bind

@@ -7,6 +7,7 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 using UnityEngine.Device;
 using System;
+using System.Linq;
 
 namespace CustomPaintings
 {
@@ -103,7 +104,7 @@ namespace CustomPaintings
 
             int materialsChecked = 0;  // Count materials checked in the scene
 
-            if (CustomPaintings.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off" && CustomPaintings.HostControl.Value == true || CustomPaintings.HostControl.Value == false && CustomPaintings.SeperateImages.Value == false)
+            if (CustomPaintingsConfig.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off" && CustomPaintingsConfig.HostControl.Value == true || CustomPaintingsConfig.HostControl.Value == false && CustomPaintingsConfig.SeperateImages.Value == false)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -114,29 +115,32 @@ namespace CustomPaintings
                         for (int i = 0; i < materials.Length; i++)
                         {
 
-
-
                             materialsChecked++;  // Increment checked materials count
+                            string matName = materials[i].name.Trim();
 
-                            if (materials[i] != null && materials[i].name.ToLower().Contains("painting"))
+                            if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
                             {
 
-                                // Exclude specific materials
-                                if (materials[i].name.Contains("Painting Frame Vertical Gold") || materials[i].name.Contains("Painting Frame Horizontal Gold"))
+                                if (materials[i] != null && groupNames.Contains("Normal"))
                                 {
 
-                                    continue; // Skip this material
-                                }
+                                    // Exclude specific materials
+                                    if (materials[i].name.Contains("Painting Frame Vertical Gold") || materials[i].name.Contains("Painting Frame Horizontal Gold"))
+                                    {
 
-                                if (loader.LoadedMaterials.Count > 0)
-                                {
+                                        continue; // Skip this material
+                                    }
 
-                                    // Use the seed to pick the image based on the index
-                                    int index = Mathf.Abs((Seed + paintingsChangedCount) % loader.LoadedMaterials.Count);
-                                    materials[i] = loader.LoadedMaterials[index];
-                                    paintingsChangedCount++;  // Increment the count of paintings changed                               
+                                    if (loader.LoadedMaterials.Count > 0)
+                                    {
+
+                                        // Use the seed to pick the image based on the index
+                                        int index = Mathf.Abs((Seed + paintingsChangedCount) % loader.LoadedMaterials.Count);
+                                        materials[i] = loader.LoadedMaterials[index];
+                                        paintingsChangedCount++;  // Increment the count of paintings changed                               
 
 
+                                    }
                                 }
                             }
                         }
@@ -145,7 +149,7 @@ namespace CustomPaintings
                     }
                 }
             }
-            else if (CustomPaintings.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on" && CustomPaintings.HostControl.Value == true || CustomPaintings.HostControl.Value == false && CustomPaintings.SeperateImages.Value == true)
+            else if (CustomPaintingsConfig.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on" && CustomPaintingsConfig.HostControl.Value == true || CustomPaintingsConfig.HostControl.Value == false && CustomPaintingsConfig.SeperateImages.Value == true)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -155,48 +159,48 @@ namespace CustomPaintings
 
                         for (int i = 0; i < materials.Length; i++)
                         {
-
-
-
                             materialsChecked++;  // Increment checked materials count
 
+                            string matName = materials[i].name.Trim();
 
-                            if (materials[i] != null && materials[i].name.ToLower().Contains("painting"))
+                            if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
                             {
 
-                                // Exclude specific materials (e.g., frames that we don't want to swap)
-                                if (materials[i].name.Contains("Painting Frame Vertical Gold") || materials[i].name.Contains("Painting Frame Horizontal Gold"))
+                                if (materials[i] != null && groupNames.Contains("Normal"))
                                 {
 
-                                    continue; // Skip this material
-                                }
+                                    // Exclude specific materials (e.g., frames that we don't want to swap)
+                                    if (materials[i].name.Contains("Painting Frame Vertical Gold") || materials[i].name.Contains("Painting Frame Horizontal Gold"))
+                                    {
 
-                                string matName = materials[i].name.Trim();
+                                        continue; // Skip this material
+                                    }
 
-                                if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out string groupName))
-                                {
-                                    if (groupName == "Landscape")
+                                    
+
+
+                                    if (groupNames.Contains("Landscape"))
                                     {
                                         int index = Mathf.Abs((Seed + LandscapeChangedCount) % loader.MaterialGroups["Landscape"].Count);
                                         materials[i] = loader.MaterialGroups["Landscape"][index];
                                         LandscapeChangedCount++;  // Increment the count of paintings changed 
 
                                     }
-                                    else if (groupName == "Square")
+                                    else if (groupNames.Contains("Square"))
                                     {
                                         int index = Mathf.Abs((Seed + SquareChangedCount) % loader.MaterialGroups["Square"].Count);
                                         materials[i] = loader.MaterialGroups["Square"][index];
                                         SquareChangedCount++;  // Increment the count of paintings changed 
                                     }
-                                    else if (groupName == "Portrait")
+                                    else if (groupNames.Contains("Portrait"))
                                     {
                                         int index = Mathf.Abs((Seed + PortraitChangedCount) % loader.MaterialGroups["Portrait"].Count);
                                         materials[i] = loader.MaterialGroups["Portrait"][index];
                                         PortraitChangedCount++;  // Increment the count of paintings changed 
                                     }
+
                                 }
                             }
-
                             renderer.sharedMaterials = materials;
                         }
                     }
@@ -205,7 +209,7 @@ namespace CustomPaintings
                 logger.LogInfo($"Total materials checked: {materialsChecked}");
 
                 // Log how many paintings were changed in this scene
-                logger.LogInfo($"Total paintings changed in this scene: {paintingsChangedCount}");
+                logger.LogInfo($"Total paintings changed in this scene: {LandscapeChangedCount + SquareChangedCount + PortraitChangedCount}");
             }
         }
 

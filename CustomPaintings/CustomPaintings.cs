@@ -21,13 +21,11 @@ namespace CustomPaintings
         private static CustomPaintingsSwap swapper;     
         private static CustomPaintingsSync sync;
         private static CustomPaintingsGroupList grouper;
+        private static CustomPaintingsConfig configfile;
 
         public static int? receivedSeed = null;
         public static readonly int maxWaitTimeMs = 1000; // Max wait time for seed
-
-        //button and slider creation
-        public static ConfigEntry<bool> SeperateImages;
-        public static ConfigEntry<bool> HostControl;
+        
 
         private readonly Harmony harmony = new Harmony("UnderratedJunk.CustomPaintings");
 
@@ -47,6 +45,9 @@ namespace CustomPaintings
             loader.LoadImagesFromAllPlugins();
 
             // Initialize grouper , pass logger as dependency
+            configfile = new CustomPaintingsConfig();
+
+            // Initialize grouper , pass logger as dependency
             grouper = new CustomPaintingsGroupList(logger);
 
             // Initialize Swapper last, pass loader as dependency
@@ -54,11 +55,6 @@ namespace CustomPaintings
 
             // Initialize syncer
             sync = new CustomPaintingsSync(logger);
-
-
-            // add button and sliders for different settings
-            HostControl = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Host Control", true, new ConfigDescription("choose if host controls seperate state"));
-            SeperateImages = ((BaseUnityPlugin)this).Config.Bind<bool>("Image Settings", "Seperate paintings", false, new ConfigDescription("seperate square, landscape and portrait images on swap"));
 
             harmony.PatchAll();
         }
@@ -124,12 +120,12 @@ namespace CustomPaintings
 
                     sync.SendSeed(HostSeed);
 
-                    if (SeperateImages.Value == true)
+                    if (CustomPaintingsConfig.SeperateImages.Value == true)
                     {
                         sync.SendSeperateState("on");
                     }
 
-                    else if (SeperateImages.Value == false)
+                    else if (CustomPaintingsConfig.SeperateImages.Value == false)
                     {
                         sync.SendSeperateState("off");
                     }
