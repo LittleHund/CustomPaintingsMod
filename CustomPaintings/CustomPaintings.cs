@@ -62,7 +62,7 @@ namespace CustomPaintings
 
 
         // Patch method for replacing the paintings
-        [HarmonyPatch(typeof(LoadingUI), "LevelAnimationComplete")]
+        [HarmonyPatch(typeof(RunManager), "awake")]
         public class PaintingSwapPatch
         {
 
