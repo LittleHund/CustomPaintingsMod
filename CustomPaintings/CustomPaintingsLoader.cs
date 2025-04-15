@@ -89,17 +89,32 @@ namespace CustomPaintings
             {
                 string filePath = files[i];
                 Texture2D texture = LoadTextureFromFile(filePath);
-                if (texture != null)
+                if (texture == null)
                 {
-                    Material material = AddGrungeMaterial(_LandscapeMaterial, texture);
-                    LoadedMaterials.Add(material);
-                    logger.LogInfo($"Loaded image #{i + 1}: {Path.GetFileName(filePath)}");
+                    logger.LogWarning($"Failed to load image #{i + 1}: {filePath}");
+                    continue;
+                }
+
+                float aspectRatio = (float)texture.width / texture.height;
+                if (aspectRatio > 1.3f)
+                {
+                    AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
+                }
+                else if (aspectRatio < 0.769f)
+                {
+                    AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
                 }
                 else
                 {
-                    logger.LogWarning($"Failed to load image #{i + 1}: {filePath}");
+                    AddGrungeMaterial("Square", _LandscapeMaterial, texture);
                 }
 
+                logger.LogInfo($"Loaded image #{i + 1}: {Path.GetFileName(filePath)}");
+            }
+
+            foreach (var materialGroup in MaterialGroups)
+            {
+                LoadedMaterials.AddRange(materialGroup.Value);
             }
 
             logger.LogInfo($"Total images loaded: {LoadedMaterials.Count}");
@@ -140,23 +155,6 @@ namespace CustomPaintings
             if (ImageConversion.LoadImage(texture, fileData))
             {
                 texture.Apply();
-
-                float aspectRatio = (float)texture.width / texture.height;
-                if (aspectRatio > 1.3f)
-                {
-                    AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
-                }
-                else if (aspectRatio < 0.769f)
-                {
-                    AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
-                }
-                else
-                {
-                    AddGrungeMaterial("Square", _LandscapeMaterial, texture);
-                }
-
-
-
 
                 return texture;
             }
@@ -230,36 +228,36 @@ namespace CustomPaintings
         {
             logger.LogDebug($"Updating Grunge Material Parameters");
 
-            foreach (var materialGroup in MaterialGroups)
+            bool grungeEnabled    = CustomPaintingsConfig.Grunge.State.Value;
+            float grungeIntensity = CustomPaintingsConfig.Grunge.Intensity.Value;
+            Color grungeColor     = new Color(1, 1, 1, grungeIntensity);
+
+            logger.LogDebug($"Grunge state is [{grungeEnabled}]!");
+            logger.LogDebug($"Grunge intensity is [{grungeIntensity}]!");
+
+            logger.LogDebug($"LoadedMaterials = [{LoadedMaterials.Count}]");
+                
+            foreach (var material in LoadedMaterials)
             {
-                var paintingType = materialGroup.Key;
-                var materials = materialGroup.Value;
-
-                foreach (var material in materials)
+                if (material == null)
                 {
-                    if (material == null)
-                    {
-                        logger.LogWarning($"No material found for [{paintingType}]!");
-                        continue;
-                    }
+                    logger.LogWarning($"No material found!");
+                    continue;
+                }
 
-                    // Is the grunge effect enabled?
-                    if (CustomPaintingsConfig.Grunge.State.Value) 
-                    {
-                        float grungeIntensity = CustomPaintingsConfig.Grunge.Intensity.Value;
-                        Color grungeColor = new Color(1, 1, 1, grungeIntensity);
-                        material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , CustomPaintingsConfig.Grunge._BaseColor.Value);
-                        material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , CustomPaintingsConfig.Grunge._MainColor.Value    * grungeColor);
-                        material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , CustomPaintingsConfig.Grunge._CracksColor.Value  * grungeColor);
-                        material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, CustomPaintingsConfig.Grunge._OutlineColor.Value * grungeColor);
-                    }
-                    else
-                    {
-                        material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , Color.clear);
-                        material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , Color.clear);
-                        material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , Color.clear);
-                        material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, Color.clear);
-                    }
+                if (grungeEnabled)
+                {
+                    material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , CustomPaintingsConfig.Grunge._BaseColor.Value);
+                    material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , CustomPaintingsConfig.Grunge._MainColor.Value    * grungeColor);
+                    material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , CustomPaintingsConfig.Grunge._CracksColor.Value  * grungeColor);
+                    material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, CustomPaintingsConfig.Grunge._OutlineColor.Value * grungeColor);
+                }
+                else
+                {
+                    material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , Color.clear);
+                    material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , Color.clear);
+                    material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , Color.clear);
+                    material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, Color.clear);
                 }
             }
         }
