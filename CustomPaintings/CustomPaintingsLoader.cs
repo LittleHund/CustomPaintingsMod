@@ -230,36 +230,36 @@ namespace CustomPaintings
         {
             logger.LogDebug($"Updating Grunge Material Parameters");
 
-            foreach (var materialGroup in MaterialGroups)
+            bool grungeEnabled    = CustomPaintingsConfig.Grunge.State.Value;
+            float grungeIntensity = CustomPaintingsConfig.Grunge.Intensity.Value;
+            Color grungeColor     = new Color(1, 1, 1, grungeIntensity);
+
+            logger.LogDebug($"Grunge state is [{grungeEnabled}]!");
+            logger.LogDebug($"Grunge intensity is [{grungeIntensity}]!");
+
+            logger.LogDebug($"LoadedMaterials = [{LoadedMaterials.Count}]");
+                
+            foreach (var material in LoadedMaterials)
             {
-                var paintingType = materialGroup.Key;
-                var materials = materialGroup.Value;
-
-                foreach (var material in materials)
+                if (material == null)
                 {
-                    if (material == null)
-                    {
-                        logger.LogWarning($"No material found for [{paintingType}]!");
-                        continue;
-                    }
+                    logger.LogWarning($"No material found!");
+                    continue;
+                }
 
-                    // Is the grunge effect enabled?
-                    if (CustomPaintingsConfig.Grunge.State.Value) 
-                    {
-                        float grungeIntensity = CustomPaintingsConfig.Grunge.Intensity.Value;
-                        Color grungeColor = new Color(1, 1, 1, grungeIntensity);
-                        material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , CustomPaintingsConfig.Grunge._BaseColor.Value);
-                        material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , CustomPaintingsConfig.Grunge._MainColor.Value    * grungeColor);
-                        material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , CustomPaintingsConfig.Grunge._CracksColor.Value  * grungeColor);
-                        material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, CustomPaintingsConfig.Grunge._OutlineColor.Value * grungeColor);
-                    }
-                    else
-                    {
-                        material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , Color.clear);
-                        material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , Color.clear);
-                        material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , Color.clear);
-                        material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, Color.clear);
-                    }
+                if (grungeEnabled)
+                {
+                    material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , CustomPaintingsConfig.Grunge._BaseColor.Value);
+                    material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , CustomPaintingsConfig.Grunge._MainColor.Value    * grungeColor);
+                    material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , CustomPaintingsConfig.Grunge._CracksColor.Value  * grungeColor);
+                    material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, CustomPaintingsConfig.Grunge._OutlineColor.Value * grungeColor);
+                }
+                else
+                {
+                    material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , Color.clear);
+                    material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , Color.clear);
+                    material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , Color.clear);
+                    material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, Color.clear);
                 }
             }
         }
