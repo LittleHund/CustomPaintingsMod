@@ -142,11 +142,7 @@ namespace CustomPaintings
                 texture.Apply();
 
                 float aspectRatio = (float)texture.width / texture.height;
-                if (aspectRatio >= 0.769f && aspectRatio <= 1.3f)
-                {
-                    AddGrungeMaterial("Square", _LandscapeMaterial, texture);
-                }
-                else if (aspectRatio > 1.3f)
+                if (aspectRatio > 1.3f)
                 {
                     AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
                 }
@@ -154,10 +150,14 @@ namespace CustomPaintings
                 {
                     AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
                 }
+                else
+                {
+                    AddGrungeMaterial("Square", _LandscapeMaterial, texture);
+                }
 
 
 
-                
+
                 return texture;
             }
             return null;
