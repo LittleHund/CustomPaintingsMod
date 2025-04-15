@@ -89,17 +89,32 @@ namespace CustomPaintings
             {
                 string filePath = files[i];
                 Texture2D texture = LoadTextureFromFile(filePath);
-                if (texture != null)
+                if (texture == null)
                 {
-                    Material material = AddGrungeMaterial(_LandscapeMaterial, texture);
-                    LoadedMaterials.Add(material);
-                    logger.LogInfo($"Loaded image #{i + 1}: {Path.GetFileName(filePath)}");
+                    logger.LogWarning($"Failed to load image #{i + 1}: {filePath}");
+                    continue;
+                }
+
+                float aspectRatio = (float)texture.width / texture.height;
+                if (aspectRatio > 1.3f)
+                {
+                    AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
+                }
+                else if (aspectRatio < 0.769f)
+                {
+                    AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
                 }
                 else
                 {
-                    logger.LogWarning($"Failed to load image #{i + 1}: {filePath}");
+                    AddGrungeMaterial("Square", _LandscapeMaterial, texture);
                 }
 
+                logger.LogInfo($"Loaded image #{i + 1}: {Path.GetFileName(filePath)}");
+            }
+
+            foreach (var materialGroup in MaterialGroups)
+            {
+                LoadedMaterials.AddRange(materialGroup.Value);
             }
 
             logger.LogInfo($"Total images loaded: {LoadedMaterials.Count}");
@@ -140,23 +155,6 @@ namespace CustomPaintings
             if (ImageConversion.LoadImage(texture, fileData))
             {
                 texture.Apply();
-
-                float aspectRatio = (float)texture.width / texture.height;
-                if (aspectRatio > 1.3f)
-                {
-                    AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
-                }
-                else if (aspectRatio < 0.769f)
-                {
-                    AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
-                }
-                else
-                {
-                    AddGrungeMaterial("Square", _LandscapeMaterial, texture);
-                }
-
-
-
 
                 return texture;
             }
