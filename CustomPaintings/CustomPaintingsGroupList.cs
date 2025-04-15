@@ -119,7 +119,7 @@ namespace CustomPaintings
         { "Wizard Sign Thinking Chamber",new List<string> {"Chaos", "Landscape" } },
         { "Wizard Sign West Wing Garden",new List<string> {"Chaos", "Landscape" } },
         { "Rug",new List<string> {"Chaos", "Square" } },
-        { "Rug Plain Red",new List<string> {"Chaos", "Square" } },
+        { "Rug Plain Red",new List<string> {"Chaos", "Landscape" } },
         { "shop rug",new List<string> {"Chaos", "Square" } },
         { "Bathroom Rug",new List<string> {"Chaos", "Square" } },
         { "Wizard Wall Flag",new List<string> {"Chaos", "Portrait" } },
