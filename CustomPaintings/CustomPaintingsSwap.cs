@@ -8,6 +8,7 @@ using Photon.Realtime;
 using UnityEngine.Device;
 using System;
 using System.Linq;
+using BepInEx.Configuration;
 
 namespace CustomPaintings
 {
@@ -24,6 +25,7 @@ namespace CustomPaintings
         private readonly Logger logger;
         private readonly CustomPaintingsLoader loader;
         private readonly CustomPaintingsGroupList grouper;
+        private static CustomPaintingsConfig configfile;
 
         //create seed variables
         private static int randomSeed = 0;      
@@ -71,7 +73,7 @@ namespace CustomPaintings
             }
         }
 
-
+        
 
         // Perform the painting swap operation
         public void ReplacePaintings()

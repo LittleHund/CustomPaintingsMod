@@ -14,6 +14,10 @@ public class CustomPaintingsConfig
     public static ConfigEntry<bool> SeperateImages;
     public static ConfigEntry<bool> ChaosMode;
 
+
+
+    //public KeyCode ForceSwapKey { get; set;}
+
     internal static class Grunge
     {
 
@@ -26,17 +30,43 @@ public class CustomPaintingsConfig
         internal static ConfigEntry<Color> _OutlineColor;
     }
 
+    /*public CustomPaintingsConfig()
+    {
+        ForceSwapKey = (KeyCode) System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("ForceSwapKey", "P"));
+
+    }*/
+
     internal static void Init(ConfigFile config)
     {
         // add button and sliders for different settings
-        HostControl = config.Bind<bool>("Image Settings", "Host Control", true, new ConfigDescription("choose if host controls seperate state"));
-        SeperateImages = config.Bind<bool>("Image Settings", "Seperate paintings", false, new ConfigDescription("seperate square, landscape and portrait images on swap"));
-        ChaosMode = config.Bind<bool>("Image Settings", "Chaos Mode", false, new ConfigDescription("adds a bunch of materials that shouldn't be changed to the pool"));
+        HostControl = config.Bind<bool>
+        (
+            "Image Settings", 
+            "Host Control", 
+            true, 
+            new ConfigDescription("choose if host controls seperate state")
+        );
+
+        SeperateImages = config.Bind<bool>
+        (
+            "Image Settings", 
+            "Seperate paintings", 
+            false, 
+            new ConfigDescription("seperate square, landscape and portrait images on swap")
+        );
+
+        ChaosMode = config.Bind<bool>
+        (
+            "Image Settings", 
+            "Chaos Mode", 
+            false, 
+            new ConfigDescription("adds a bunch of materials that shouldn't be changed to the pool")
+        );
 
         Grunge.State = config.Bind
         (
             "Grunge",
-            "State",
+            "Grunge state",
             true,
             new ConfigDescription("Whether the grunge effect is enabled")
         );
