@@ -1,0 +1,9 @@
+to use a converter
+- create a folder called ImagesToConvert
+- put all images you want to convert in this folder
+- launch the converter of choise
+- done
+
+images will automatically be moved to the CustomImages folder and renamed to numbers from 1 up
+images in the ImagesToConvert folder will be deleted
+
