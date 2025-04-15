@@ -26,6 +26,8 @@ namespace CustomPaintings
         { "PaintingMedium", new List<string> {"Landscape", "Normal", "Chaos" } },
         { "Painting_Danish_Flag", new List<string> {"Landscape", "Normal", "Chaos" } },
         { "Painting_Board", new List<string> {"Landscape", "Normal", "Chaos" } },
+        { "Painting Danish Flag", new List<string> {"Landscape", "Normal", "Chaos" } },
+        { "Painting Board", new List<string> {"Landscape", "Normal", "Chaos" } },
         { "Shop Outside Billboard Ad", new List<string> {"Landscape", "Normal", "Chaos" } },
 
         // Square group
@@ -36,6 +38,8 @@ namespace CustomPaintings
         { "Picture Frame - Picture 01", new List<string> {"Square", "Normal", "Chaos" } },
         { "Painting_Aurora", new List<string> {"Square", "Normal", "Chaos" } },
         { "Painting_McJannek", new List<string> {"Square", "Normal", "Chaos" } },
+        { "Painting Aurora", new List<string> {"Square", "Normal", "Chaos" } },
+        { "Painting McJannek", new List<string> {"Square", "Normal", "Chaos" } },
 
         // Portrait group
         { "Painting_V_jannk", new List<string> {"Portrait", "Normal", "Chaos" } },
