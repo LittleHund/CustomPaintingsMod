@@ -59,7 +59,13 @@ namespace CustomPaintings
             harmony.PatchAll();
         }
 
-
+        /*public void Update()
+        {
+            if (Input.GetKeyDown(configfile.ForceSwapKey))
+            {
+                swapper.ReplacePaintings();
+            }
+        }*/
 
         // Patch method for replacing the paintings
         [HarmonyPatch(typeof(LoadingUI), "LevelAnimationComplete")]
