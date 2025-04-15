@@ -16,9 +16,9 @@ namespace CustomPaintings
     public class CustomPaintings : BaseUnityPlugin
     {
         // create instances for the different class files
-        private static Logger logger;                   
-        private static CustomPaintingsLoader loader;    
-        private static CustomPaintingsSwap swapper;     
+        private static Logger logger;
+        private static CustomPaintingsLoader loader;
+        private static CustomPaintingsSwap swapper;
         private static CustomPaintingsSync sync;
         private static CustomPaintingsGroupList grouper;
         private static CustomPaintingsConfig configfile;
