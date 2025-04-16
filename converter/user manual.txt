@@ -1,5 +1,6 @@
 to use a converter
-- create a folder called ImagesToConvert
+- put the converter folder in any folder you'd like to add a CustomPaintings folder to (not in the CustomPaintings folder)
+- create a folder called ImagesToConvert in the converter folder
 - put all images you want to convert in this folder
 - launch the converter of choise
 - done
