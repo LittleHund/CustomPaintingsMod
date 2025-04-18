@@ -12,7 +12,7 @@ using System;
 
 namespace CustomPaintings
 {
-    [BepInPlugin("UnderratedJunk.CustomPaintings", "CustomPaintings", "1.1.3")]
+    [BepInPlugin("UnderratedJunk.CustomPaintings", "CustomPaintings", "1.1.4")]
     public class CustomPaintings : BaseUnityPlugin
     {
         // create instances for the different class files
