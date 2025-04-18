@@ -120,7 +120,7 @@ public class CustomPaintingsConfig
             "Graphics",
             "PointFiltering",
             true,
-            new ConfigDescription("Whether to make the textures blocky and sharp (Nearest Neighbor Interpolation)")
+            new ConfigDescription("Point filtering will match the pixelated effect the game has")
         );
     }
 }

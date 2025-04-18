@@ -20,6 +20,14 @@ https://discord.gg/FB4KmrdgPr<br>
 ## Updates
 
 <details>
+<summary><b><i><ins> update 1.1.4 </b></i></ins></summary> <br>
+<li> added point filtering to the paintings													</li><br>
+<li> added a setting to enable/disable point filtering										</li><br>
+	 point filtering will match the pixelated effect the game has								<br>
+</details>
+
+
+<details>
 <summary><b><i><ins> update 1.1.3 </b></i></ins></summary> <br>
 <li> fixed the grunge adjustments not working realtime. </li><br>
 <li> moved the converters to github, due to someone mentioning it being flagged by windows as a trojan.	</li><br>
