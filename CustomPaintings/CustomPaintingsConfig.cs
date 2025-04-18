@@ -20,7 +20,6 @@ public class CustomPaintingsConfig
 
     internal static class Grunge
     {
-
         internal static ConfigEntry<bool>  State;
         internal static ConfigEntry<float> Intensity;
 
@@ -28,6 +27,11 @@ public class CustomPaintingsConfig
         internal static ConfigEntry<Color> _MainColor;
         internal static ConfigEntry<Color> _CracksColor;
         internal static ConfigEntry<Color> _OutlineColor;
+    }
+
+    internal static class Graphics
+    {
+        internal static ConfigEntry<bool> PointFiltering;
     }
 
     /*public CustomPaintingsConfig()
@@ -41,24 +45,24 @@ public class CustomPaintingsConfig
         // add button and sliders for different settings
         HostControl = config.Bind<bool>
         (
-            "Image Settings", 
-            "Host Control", 
+            "Image Settings",
+            "Host Control",
             true, 
             new ConfigDescription("choose if host controls seperate state")
         );
 
         SeperateImages = config.Bind<bool>
         (
-            "Image Settings", 
-            "Seperate paintings", 
+            "Image Settings",
+            "Seperate paintings",
             false, 
             new ConfigDescription("seperate square, landscape and portrait images on swap")
         );
 
         ChaosMode = config.Bind<bool>
         (
-            "Image Settings", 
-            "Chaos Mode", 
+            "Image Settings",
+            "Chaos Mode",
             false, 
             new ConfigDescription("adds a bunch of materials that shouldn't be changed to the pool")
         );
@@ -109,6 +113,14 @@ public class CustomPaintingsConfig
             "_GrungeOutlineColor",
             new Color(0, 0, 0, 1),
             new ConfigDescription("The color of the grunge outlining the painting")
+        );
+
+        Graphics.PointFiltering = config.Bind
+        (
+            "Graphics",
+            "PointFiltering",
+            true,
+            new ConfigDescription("Whether to make the textures blocky and sharp (Nearest Neighbor Interpolation)")
         );
     }
 }

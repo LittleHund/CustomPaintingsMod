@@ -6,7 +6,6 @@ using System.Reflection;
 using BepInEx;
 using JetBrains.Annotations;
 using UnityEngine;
-using static CustomPaintings.CustomPaintingsConfig;
 
 namespace CustomPaintings
 {
@@ -49,7 +48,7 @@ namespace CustomPaintings
             string[] directories = Directory.GetDirectories(pluginsPath, IMAGE_FOLDER_NAME, SearchOption.AllDirectories);
 
             LoadGrungeMaterials();
-            BindGrungeConfigUpdates();
+            BindConfigUpdates();
 
             if (directories.Length == 0)
             {
@@ -154,6 +153,8 @@ namespace CustomPaintings
             var texture = new Texture2D(2, 2);
             if (ImageConversion.LoadImage(texture, fileData))
             {
+                SetFilterMode(texture);
+
                 texture.Apply();
 
                 return texture;
@@ -172,11 +173,11 @@ namespace CustomPaintings
             bool assetBundleExists = File.Exists(assetLocation);
             if (assetBundleExists)
             {
-                logger.LogInfo($"Grunge Asset Bundle exists");
+                logger.LogInfo($"Grunge Asset Bundle exists.");
             }
             else
             {
-                logger.LogWarning($"Grunge Asset Bundle doesn't exist");
+                logger.LogWarning($"Grunge Asset Bundle doesn't exist!");
 
             }
 
@@ -184,7 +185,7 @@ namespace CustomPaintings
 
             if (assetBundle == null)
             {
-                logger.LogError($"Failed to load [{assetName}]");
+                logger.LogError($"Failed to load [{assetName}]!");
             }
             else
             {
@@ -200,13 +201,13 @@ namespace CustomPaintings
                 }
             }
 
-            if (_LandscapeMaterial != null & _PortraitMaterial != null)
+            if (_LandscapeMaterial != null && _PortraitMaterial != null)
             {
                 logger.LogInfo($"Grunge materials successfully loaded!");
             }
         }
 
-        internal void BindGrungeConfigUpdates()
+        internal void BindConfigUpdates()
         {
             CustomPaintingsConfig.Grunge.State.SettingChanged         += OnGrungeConfigOptionChanged;
             CustomPaintingsConfig.Grunge.Intensity.SettingChanged     += OnGrungeConfigOptionChanged;
@@ -216,9 +217,27 @@ namespace CustomPaintings
             CustomPaintingsConfig.Grunge._MainColor.SettingChanged    += OnGrungeConfigOptionChanged;
             CustomPaintingsConfig.Grunge._CracksColor.SettingChanged  += OnGrungeConfigOptionChanged;
             CustomPaintingsConfig.Grunge._OutlineColor.SettingChanged += OnGrungeConfigOptionChanged;
+
+            CustomPaintingsConfig.Graphics.PointFiltering.SettingChanged       += OnPointFilteringConfigOptionChange;
         }
 
-        private void OnGrungeConfigOptionChanged(object sender, EventArgs e)
+        internal void OnPointFilteringConfigOptionChange(object sender, EventArgs e)
+        {
+            foreach (var material in LoadedMaterials)
+            {
+                SetFilterMode(material.mainTexture);
+            }
+        }
+
+        internal void SetFilterMode(Texture texture)
+        {
+            if (CustomPaintingsConfig.Graphics.PointFiltering.Value)
+            { texture.filterMode = FilterMode.Point; }
+            else
+            { texture.filterMode = FilterMode.Trilinear; }
+        }
+
+        internal void OnGrungeConfigOptionChanged(object sender, EventArgs e)
         {
             UpdateGrungeMaterialParameters();
         }
@@ -226,7 +245,7 @@ namespace CustomPaintings
         // Get config values for the material
         internal void UpdateGrungeMaterialParameters()
         {
-            logger.LogDebug($"Updating Grunge Material Parameters");
+            logger.LogDebug($"Updating Grunge Material Parameters...");
 
             bool grungeEnabled    = CustomPaintingsConfig.Grunge.State.Value;
             float grungeIntensity = CustomPaintingsConfig.Grunge.Intensity.Value;
@@ -235,8 +254,8 @@ namespace CustomPaintings
             logger.LogDebug($"Grunge state is [{grungeEnabled}]!");
             logger.LogDebug($"Grunge intensity is [{grungeIntensity}]!");
 
-            logger.LogDebug($"LoadedMaterials = [{LoadedMaterials.Count}]");
-                
+            logger.LogDebug($"Number of loaded painting materials = [{LoadedMaterials.Count}]");
+
             foreach (var material in LoadedMaterials)
             {
                 if (material == null)
