@@ -146,8 +146,28 @@ namespace CustomPaintings
         { "Arctic Door"                                 ,   new List<string>    {"Portrait"     , "Chaos" } },
         { "Arctic Door Blocked"                         ,   new List<string>    {"Portrait"     , "Chaos" } },
         { "Museum Door"                                 ,   new List<string>    {"Portrait"     , "Chaos" } },
-        { "door base"                                   ,   new List<string>    {"Portrait"     , "Chaos" } }
-
+        { "door base"                                   ,   new List<string>    {"Portrait"     , "Chaos" } },
+        { "Kitchen Fridge"                              ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Inflatable Hammer"                           ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Moon"                                        ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Soda Machine"                                ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Soda Shelf Sodas"                            ,   new List<string>    {"Square"       , "Chaos" } },
+        //truck items chaos group
+        { "Truck Item Shelf"                            ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Map - Truck Wall"                            ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Map - Truck Floor"                           ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Truck Interior Front"                        ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Truck Interior Back"                         ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Truck Door"                                  ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Truck"                                       ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Truck_0"                                     ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Truck Glass Not Transparent"                 ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Truck Glass Not Transparent Demolished"      ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Truck Demolished"                            ,   new List<string>    {"Landscape"    , "Chaos" } },
+        { "Truck Depot"                                 ,   new List<string>    {"Square"       , "Chaos" } },
+        { "Truck Healer"                                ,   new List<string>    {"Square"       , "Chaos" } },
+        //valuable items chaos group
+        { "Valuable Arctic Guitar"                      ,   new List<string>    {"Landscape"    , "Chaos" } }        
         };
     }
 }
