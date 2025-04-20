@@ -17,7 +17,7 @@ namespace CustomPaintings
 
         // assign a specific code to different events
         public const byte SeedEventCode = 1;
-        public const byte SeperateStateCode = 2;
+        public const byte HostSettingsCode = 2;
 
 
         public CustomPaintingsSync(Logger logger)
@@ -43,12 +43,12 @@ namespace CustomPaintings
 
         }
 
-        public void SendSeperateState(string toggle)
+        public void SendHostSettings(string HostSeperateState, bool HostRBState)
         {
 
 
             // Create an event data object that will carry the seperation state information
-            object[] content = new object[] { toggle };
+            object[] content = new object[] { HostSeperateState, HostRBState };
 
             logger.LogInfo("sharing seperation setting");
 
@@ -59,7 +59,7 @@ namespace CustomPaintings
             };
 
             // Raise the event to all clients (using the custom event code)
-            PhotonNetwork.RaiseEvent(SeperateStateCode, content, options, SendOptions.SendReliable);
+            PhotonNetwork.RaiseEvent(HostSettingsCode, content, options, SendOptions.SendReliable);
 
         }
 
@@ -78,13 +78,16 @@ namespace CustomPaintings
             }
 
             //retrieve seperation state data from event
-            if (photonEvent.Code == SeperateStateCode)
+            if (photonEvent.Code == HostSettingsCode)
             {
                 object[] data = (object[])photonEvent.CustomData;
-                string toggle = (string)data[0];
+                string HostSeperateState = (string)data[0];
+                bool HostRBState = (bool)data[1];
 
-                logger.LogInfo($"Received seperate state: {toggle}");
-                SeperateState = toggle;
+                logger.LogInfo($"Received seperate state: {HostSeperateState}");
+                logger.LogInfo($"Received Rug and Banner state: {HostRBState}");
+                SeperateState = HostSeperateState;
+                RBState = HostRBState;
             }
 
         }

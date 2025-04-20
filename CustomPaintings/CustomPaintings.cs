@@ -59,13 +59,13 @@ namespace CustomPaintings
             harmony.PatchAll();
         }
 
-        /*public void Update()
+        public void Update()
         {
             if (Input.GetKeyDown(configfile.ForceSwapKey))
             {
                 swapper.ReplacePaintings();
             }
-        }*/
+        }
 
         // Patch method for replacing the paintings
         [HarmonyPatch(typeof(LoadingUI), "LevelAnimationComplete")]
@@ -128,12 +128,12 @@ namespace CustomPaintings
 
                     if (CustomPaintingsConfig.SeperateImages.Value == true)
                     {
-                        sync.SendSeperateState("on");
+                        sync.SendHostSettings("on", CustomPaintingsConfig.RugsAndBanners.Value);
                     }
 
                     else if (CustomPaintingsConfig.SeperateImages.Value == false)
                     {
-                        sync.SendSeperateState("off");
+                        sync.SendHostSettings("off", CustomPaintingsConfig.RugsAndBanners.Value);
                     }
 
                 }
