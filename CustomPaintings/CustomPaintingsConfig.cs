@@ -12,11 +12,12 @@ public class CustomPaintingsConfig
 {
     public static ConfigEntry<bool> HostControl;
     public static ConfigEntry<bool> SeperateImages;
+    public static ConfigEntry<bool> RugsAndBanners;
     public static ConfigEntry<bool> ChaosMode;
 
 
 
-    //public KeyCode ForceSwapKey { get; set;}
+    public KeyCode ForceSwapKey { get; set;}
 
     internal static class Grunge
     {
@@ -34,11 +35,11 @@ public class CustomPaintingsConfig
         internal static ConfigEntry<bool> PointFiltering;
     }
 
-    /*public CustomPaintingsConfig()
+    public CustomPaintingsConfig()
     {
         ForceSwapKey = (KeyCode) System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("ForceSwapKey", "P"));
 
-    }*/
+    }
 
     internal static void Init(ConfigFile config)
     {
@@ -57,6 +58,14 @@ public class CustomPaintingsConfig
             "Seperate paintings",
             false, 
             new ConfigDescription("seperate square, landscape and portrait images on swap")
+        );
+
+        RugsAndBanners = config.Bind<bool>
+        (
+            "Image Settings",
+            "enable rugs and banners",
+            false,
+            new ConfigDescription("add rugs and banners to the swap pool")
         );
 
         ChaosMode = config.Bind<bool>

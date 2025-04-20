@@ -33,8 +33,9 @@ namespace CustomPaintings
         public static int ReceivedSeed = 0;     
         public static int Seed = 0; //seed applied to swap
 
-        //create string used to check if host decides seperation state
+        //create string used to check host settings
         public static string SeperateState = "Singleplayer";
+        public static bool RBState = false;
 
         //create string to check what mode you are in
         public static string ImageMode = "Normal";
@@ -104,7 +105,14 @@ namespace CustomPaintings
             }
             else if (CustomPaintingsConfig.ChaosMode.Value == false)
             {
-                ImageMode = "Normal";
+                if (CustomPaintingsConfig.RugsAndBanners.Value == true)
+                {
+                    ImageMode = "RugsAndBanners";
+                }
+                else
+                {
+                    ImageMode = "Normal";
+                }
             }
 
             //check current scene
