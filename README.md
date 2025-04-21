@@ -17,66 +17,23 @@ reactions might take a while though.<br>
 https://discord.gg/FB4KmrdgPr<br>
 
 
-## Updates
+## Latest Update
 
-<details>
-<summary><b><i><ins> update 1.1.4 </b></i></ins></summary> <br>
-<li> added point filtering to the paintings													</li><br>
-<li> added a setting to enable/disable point filtering										</li><br>
-	 point filtering will match the pixelated effect the game has								<br>
-</details>
-
-
-<details>
-<summary><b><i><ins> update 1.1.3 </b></i></ins></summary> <br>
-<li> fixed the grunge adjustments not working realtime. </li><br>
-<li> moved the converters to github, due to someone mentioning it being flagged by windows as a trojan.	</li><br>
-</details>
-
-
-<details>
-<summary><b><i><ins> update 1.1.1 </b></i></ins></summary> <br>
-<li> 		fixed some textures no longer changing.					</li><br>
-<li><del>	fixed realtime grunge adjustment not working.			</del></li><br>
-<li> 		added a chaos mode which changes some weird textures.		</li><br>
-<li> 		fixed user manual not containing anything.					</li><br>
-</details>
-
-
-<details>
-<summary><b><i><ins> update 1.1.0 </b></i></ins></summary> <br>
-<li> added a hostcontrol setting.									</li><br>
-<li> added grunge setting and slider.								</li><br>
-<li> grunge intensity is configurable.								</li><br>
-<li> added some magazines and other aobjects into the change pool.	</li><br>
-</details>
-
-
-<details>
-<summary><b><i><ins> update 1.0.8 </b></i></ins></summary> <br>
-
-<li> separation of square, landscape and portrait images now available/supported.													</li><br>
-<li> added a setting in the mod settings menu for separation, which can be disabled during gameplay and is applied on next map.		</li><br>
-<li> host of lobby decides if seperation is on or off.																				</li><br>
-<li> when setting is enabled, square images go in square paintings, landscape in landscape and portrait in portrait.				</li><br>
-</details>
-
-
-<details>
-<summary><b><i><ins> update 1.0.7 </b></i></ins></summary> <br>
-<li> added support for .jpg and .jpeg files so the images take up less space.	</li><br>
-<li> added converters to .png or to .jpeg.										</li><br>
-<li> added instructions for the converters.										</li><br>
-</details>
-
-
-<details>
-<summary><b><i><ins> update 1.0.5 </b></i></ins></summary> <br>
-<li> now syncs paintings with all clients, as long as exactly the same images are loaded.	</li><br>
-</details><br>
+<b><i><ins> update 1.1.5 </b></i></ins> <br>
+- added a setting to add rugs and banners to the swap pool
+- added a forceswap button in case the swap didnt work "P"
+- added some things to the chaos list
+- fixed singleplayer seed not randomizing
 
 
 
-## inspiration/credit
+
+## Support
+Support the creator of this mod		<br>
+<p><a href="https://Ko-fi.com/littlehund">
+<img alt="kofi" src="https://i.imgur.com/jzwECeF.png">
+</a></p>
+
+## Inspiration
 v1.0.0 of this mod is inspired by RandomPaintingSwap<br>
 https://thunderstore.io/c/repo/p/GabzDEV/RandomPaintingSwap/
