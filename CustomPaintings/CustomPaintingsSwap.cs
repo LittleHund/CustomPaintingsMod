@@ -27,8 +27,7 @@ namespace CustomPaintings
         private readonly CustomPaintingsGroupList grouper;
         private static CustomPaintingsConfig configfile;
 
-        //create seed variables
-        private static int randomSeed = 0;      
+        //create seed variables      
         public static int HostSeed = 0;        
         public static int ReceivedSeed = 0;     
         public static int Seed = 0; //seed applied to swap
@@ -66,12 +65,7 @@ namespace CustomPaintings
             // Log the current state on initialization
             logger.LogInfo($"Initial ModState: {currentState}");
 
-            // Log seed generation for the first scene load (if the seed was not generated in the first call)
-            if (randomSeed == 0)
-            {
-                randomSeed = UnityEngine.Random.Range(0, int.MaxValue);
-                logger.LogInfo($"Generated initial random seed: {randomSeed}");
-            }
+            
         }
 
         
@@ -83,6 +77,7 @@ namespace CustomPaintings
             {
                 //use singleplayer seed
                 Seed = UnityEngine.Random.Range(0, int.MaxValue);
+                logger.LogInfo($"Generated new random singleplayer seed: {Seed}");
             }
 
 
