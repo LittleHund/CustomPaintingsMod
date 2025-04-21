@@ -16,8 +16,8 @@ namespace CustomPaintings
         private readonly Logger logger;
 
         // assign a specific code to different events
-        public const byte SeedEventCode = 1;
-        public const byte HostSettingsCode = 2;
+        public const byte SeedEventCode = 241;
+        public const byte HostSettingsCode = 242;
 
 
         public CustomPaintingsSync(Logger logger)
