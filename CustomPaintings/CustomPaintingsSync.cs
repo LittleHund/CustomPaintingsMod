@@ -87,6 +87,7 @@ namespace CustomPaintings
 
                 logger.LogInfo($"Received seperate state: {HostSeperateState}");
                 logger.LogInfo($"Received Rug and Banner state: {HostRBState}");
+                logger.LogInfo($"Received chaos state: {Chaosstate}");
                 SeperateState = HostSeperateState;
                 RBState = HostRBState;
                 ChaosState = Chaosstate;
