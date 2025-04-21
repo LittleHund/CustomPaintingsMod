@@ -131,12 +131,12 @@ namespace CustomPaintings
 
                     if (CustomPaintingsConfig.SeperateImages.Value == true)
                     {
-                        sync.SendHostSettings("on", CustomPaintingsConfig.RugsAndBanners.Value);
+                        sync.SendHostSettings("on", CustomPaintingsConfig.RugsAndBanners.Value, CustomPaintingsConfig.ChaosMode.Value);
                     }
 
                     else if (CustomPaintingsConfig.SeperateImages.Value == false)
                     {
-                        sync.SendHostSettings("off", CustomPaintingsConfig.RugsAndBanners.Value);
+                        sync.SendHostSettings("off", CustomPaintingsConfig.RugsAndBanners.Value, CustomPaintingsConfig.ChaosMode.Value);
                     }
 
                 }
