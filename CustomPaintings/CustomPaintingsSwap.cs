@@ -82,7 +82,7 @@ namespace CustomPaintings
             if (currentState == ModState.SinglePlayer)
             {
                 //use singleplayer seed
-                Seed = randomSeed;
+                Seed = UnityEngine.Random.Range(0, int.MaxValue);
             }
 
 
