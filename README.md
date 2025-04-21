@@ -19,11 +19,10 @@ https://discord.gg/FB4KmrdgPr<br>
 
 ## Latest Update
 
-<b><i><ins> update 1.1.5 </b></i></ins> <br>
-- added a setting to add rugs and banners to the swap pool
-- added a forceswap button in case the swap didnt work "P"
-- added some things to the chaos list
-- fixed singleplayer seed not randomizing
+<b><i><ins> update 1.1.6 </b></i></ins> <br>
+- added rugs and banner setting to shared host settings
+- added chaos setting to shared host settings
+
 
 
 
