@@ -35,6 +35,7 @@ namespace CustomPaintings
         //create string used to check host settings
         public static string SeperateState = "Singleplayer";
         public static bool RBState = false;
+        public static bool ChaosState = false;
 
         //create string to check what mode you are in
         public static string ImageMode = "Normal";
@@ -94,17 +95,17 @@ namespace CustomPaintings
                 Seed = ReceivedSeed;
             }
 
-            if (CustomPaintingsConfig.ChaosMode.Value == true)
+            if (CustomPaintingsConfig.ChaosMode.Value == true && CustomPaintingsConfig.HostControl.Value == false || ChaosState == true && CustomPaintingsConfig.HostControl.Value == true)
             {
                 ImageMode = "Chaos";
             }
-            else if (CustomPaintingsConfig.ChaosMode.Value == false)
+            else if (CustomPaintingsConfig.ChaosMode.Value == false && CustomPaintingsConfig.HostControl.Value == false || ChaosState == false && CustomPaintingsConfig.HostControl.Value == true)
             {
-                if (CustomPaintingsConfig.RugsAndBanners.Value == true)
+                if (CustomPaintingsConfig.RugsAndBanners.Value == true && CustomPaintingsConfig.HostControl.Value == false || RBState == true && CustomPaintingsConfig.HostControl.Value == true)
                 {
                     ImageMode = "RugsAndBanners";
                 }
-                else
+                else if (CustomPaintingsConfig.RugsAndBanners.Value == false && CustomPaintingsConfig.HostControl.Value == false || RBState == false && CustomPaintingsConfig.HostControl.Value == true)
                 {
                     ImageMode = "Normal";
                 }

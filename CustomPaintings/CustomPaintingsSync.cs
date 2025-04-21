@@ -43,12 +43,12 @@ namespace CustomPaintings
 
         }
 
-        public void SendHostSettings(string HostSeperateState, bool HostRBState)
+        public void SendHostSettings(string HostSeperateState, bool HostRBState, bool Chaosstate)
         {
 
 
             // Create an event data object that will carry the seperation state information
-            object[] content = new object[] { HostSeperateState, HostRBState };
+            object[] content = new object[] { HostSeperateState, HostRBState, Chaosstate };
 
             logger.LogInfo("sharing seperation setting");
 
@@ -83,11 +83,13 @@ namespace CustomPaintings
                 object[] data = (object[])photonEvent.CustomData;
                 string HostSeperateState = (string)data[0];
                 bool HostRBState = (bool)data[1];
+                bool Chaosstate = (bool)data[2];
 
                 logger.LogInfo($"Received seperate state: {HostSeperateState}");
                 logger.LogInfo($"Received Rug and Banner state: {HostRBState}");
                 SeperateState = HostSeperateState;
                 RBState = HostRBState;
+                ChaosState = Chaosstate;
             }
 
         }
