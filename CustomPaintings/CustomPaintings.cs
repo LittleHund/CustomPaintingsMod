@@ -24,6 +24,7 @@ namespace CustomPaintings
         private static CustomPaintingsConfig configfile;
 
         public static int? receivedSeed = null;
+        public static int? oldreceivedSeed = null;
         public static readonly int maxWaitTimeMs = 1000; // Max wait time for seed
         
 
@@ -89,13 +90,15 @@ namespace CustomPaintings
                     if (receivedSeed.HasValue)
                     {
                         logger.LogInfo($"[Postfix] Client using received seed: {receivedSeed.Value}");
+                        oldreceivedSeed = ReceivedSeed;
                         ReceivedSeed = receivedSeed.Value;
                         receivedSeed = null; //reset receivedseed for while loop above to work correctly
                     }
-                    /*else
+                    else if (ReceivedSeed == oldreceivedSeed)
                     {
                         logger.LogWarning("[Postfix] Client did not receive seed in time. Proceeding without it.");
-                    }*/
+                    }
+                    
 
                     swapper.ReplacePaintings();
                 });
