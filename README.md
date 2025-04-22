@@ -7,12 +7,9 @@ this mod replaces all paintings with your custom ones.<br>
 there is a converter with instructions on the github page.<br>
 enjoy!!<br>
 <br>
-
-- this works with multiple different folders in different locations.<br>
-- the folder needs to be named "CustomPaintings" and has to be in any (sub)folder within BepInEx\plugins.<br>
-- for syncing to work everyone needs to have exactly the same images installed and loaded.<br>
 <br>
-
+this works with multiple different folders in different locations.<br>
+as long as al the folders are named "CustomPaintings" and is within any (sub)folder within BepInEx\plugins.<br>
 
 ## Discord
 for questions and ideas join our discord.<br>
@@ -22,9 +19,10 @@ https://discord.gg/FB4KmrdgPr<br>
 
 ## Latest Update
 
-<b><i><ins> update 1.1.6 </b></i></ins> <br>
-- added rugs and banner setting to shared host settings
-- added chaos setting to shared host settings
+<b><i><ins> update 1.1.7 </b></i></ins> <br>
+- fixed sync no longer working since update 1.1.5
+
+
 
 
 
