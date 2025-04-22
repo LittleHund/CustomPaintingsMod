@@ -1,3 +1,7 @@
+## update 1.1.7
+- fixed sync no longer working since update 1.1.5
+
+
 ## update 1.1.6 
 - added rugs and banner setting to shared host settings
 - added chaos setting to shared host settings
