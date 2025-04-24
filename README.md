@@ -7,7 +7,10 @@ this mod replaces all paintings with your custom ones.<br>
 there is a converter with instructions on the github page.<br>
 enjoy!!<br>
 <br>
-<br>
+- everyone needs to install the images
+- for sync to work everyone needs the exact same images
+
+
 this works with multiple different folders in different locations.<br>
 as long as al the folders are named "CustomPaintings" and is within any (sub)folder within BepInEx\plugins.<br>
 
@@ -19,10 +22,8 @@ https://discord.gg/FB4KmrdgPr<br>
 
 ## Latest Update
 
-<b><i><ins> update 1.1.7 </b></i></ins> <br>
+<b><i><ins> update 1.1.8 </b></i></ins> <br>
 - fixed sync no longer working since update 1.1.5
-
-
 
 
 
