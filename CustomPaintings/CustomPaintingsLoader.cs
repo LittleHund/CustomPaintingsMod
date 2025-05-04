@@ -29,6 +29,8 @@ namespace CustomPaintings
         static Material _LandscapeMaterial;
         static Material _PortraitMaterial;
 
+        private int loadedcount = 1;
+
         // Constructor to initialize the logger
         public CustomPaintingsLoader(Logger logger)
         {
@@ -38,7 +40,7 @@ namespace CustomPaintings
         // Load images from all plugins
         public void LoadImagesFromAllPlugins()
         {
-            string pluginsPath = Path.Combine(Paths.PluginPath);
+            string pluginsPath = Path.Combine(Paths.BepInExRootPath);
             if (!Directory.Exists(pluginsPath))
             {
                 logger.LogWarning($"Plugins directory not found: {pluginsPath}");
@@ -108,7 +110,8 @@ namespace CustomPaintings
                     AddGrungeMaterial("Square", _LandscapeMaterial, texture);
                 }
 
-                logger.LogInfo($"Loaded image #{i + 1}: {Path.GetFileName(filePath)}");
+                logger.LogInfo($"Loaded image #{loadedcount}: {Path.GetFileName(filePath)}");
+                loadedcount++;
             }
 
             foreach (var materialGroup in MaterialGroups)

@@ -1,4 +1,9 @@
-## update 1.1.7
+## update 1.1.9
+- changed folder that is checked for a "CustomPaintings" folder from plugins to BepInEx
+- images can now be added to the config folder for the people who share profile codes
+
+
+## update 1.1.8
 - fixed sync no longer working since update 1.1.5
 
 
