@@ -22,8 +22,9 @@ https://discord.gg/FB4KmrdgPr<br>
 
 ## Latest Update
 
-<b><i><ins> update 1.1.8 </b></i></ins> <br>
-- fixed sync no longer working since update 1.1.5
+<b><i><ins> update 1.1.9 </b></i></ins> <br>
+- changed folder that is checked for a "CustomPaintings" folder from plugins to BepInEx
+- images can now be added to the config folder for the people who share profile codes
 
 
 
