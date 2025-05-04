@@ -1,12 +1,18 @@
 # CustomPaintings
 
 this mod replaces all paintings with your custom ones.<br>
-- create or use a folder named "CustomPaintings" within the plugins folder(subfolders also work).<br>
+- create or use a folder named "CustomPaintings" within the plugins or config folder(subfolders also work).<br>
+<b>for sharing profile codes the config folder is recommended</b><br>
+![alt text](https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/CustomPaintings_folder.png)
+![alt text](https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/config_Plugins_folders.png)
+
+
 - put any .png, .jpg, .jpeg file in this folder and play.<br>
 
 there is a converter with instructions on the github page.<br>
 enjoy!!<br>
 <br>
+
 - everyone needs to install the images
 - for sync to work everyone needs the exact same images
 
