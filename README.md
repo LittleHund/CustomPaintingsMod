@@ -3,8 +3,8 @@
 this mod replaces all paintings with your custom ones.<br>
 - create or use a folder named "CustomPaintings" within the plugins or config folder(subfolders also work).<br>
 <b>for sharing profile codes the config folder is recommended</b><br>
-![alt text](https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/CustomPaintings_folder.png)
-![alt text](https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/config_Plugins_folders.png)
+<img src="https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/CustomPaintings_folder.png">
+<img src="https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/config_Plugins_folders.png" width=50%>
 
 
 - put any .png, .jpg, .jpeg file in this folder and play.<br>
