@@ -1,5 +1,5 @@
 ## update 1.1.9
-- changed folder that is checked for a "CustomPaintings" folder from plugins to BepInEx
+- changed folder that is checked from plugins to BepInEx
 - images can now be added to the config folder for the people who share profile codes
 
 
