@@ -63,6 +63,13 @@ namespace CustomPaintings
                 logger.LogInfo($"Loading images from: {directoryPath}");
                 LoadImagesFromDirectory(directoryPath);
             }
+            foreach (var materialGroup in MaterialGroups)
+            {
+                LoadedMaterials.AddRange(materialGroup.Value);
+            }
+
+            logger.LogInfo($"Total images loaded: {LoadedMaterials.Count}");
+
         }
 
         // Load images from a specific directory
@@ -113,14 +120,8 @@ namespace CustomPaintings
                 logger.LogInfo($"Loaded image #{loadedcount}: {Path.GetFileName(filePath)}");
                 loadedcount++;
             }
-
-            foreach (var materialGroup in MaterialGroups)
-            {
-                LoadedMaterials.AddRange(materialGroup.Value);
-            }
-
-            logger.LogInfo($"Total images loaded: {LoadedMaterials.Count}");
         }
+            
 
         Material AddGrungeMaterial(Material grungeMaterial, Texture2D texture)
         {
