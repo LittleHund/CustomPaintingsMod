@@ -19,7 +19,7 @@ there is a png and jpeg converter with instructions on the github page.<br>
 ## Discord
 for questions and ideas join our discord.<br>
 <p><a href="https://discord.gg/FB4KmrdgPr">
-<img alt="Discord" src="https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/join_discord.jpg" height="100" width="350"> <br>
+<img alt="Discord" src="https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/join_discord.jpg" height="100" width="300"> <br>
 </a></p>
 
 
