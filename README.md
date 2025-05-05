@@ -20,7 +20,7 @@ the converter will also change the names to numbers.<br>
 ## Discord
 for questions and ideas join our discord.<br>
 <p><a href="https://discord.gg/FB4KmrdgPr">
-<img alt="Discord" src="https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/join_discord.png" height="100" width="350"> <br>
+<img alt="Discord" src="https://github.com/LittleHund/CustomPaintingsMod/blob/master/images/join_discord.jpg" height="100" width="300"> <br>
 </a></p>
 
 
