@@ -15,6 +15,7 @@ to use your images:<br>
 
 this works with multiple different folders in different locations.<br>
 there is a png and jpeg converter with instructions on the github page.<br>
+the converter will also change the names to numbers.<br>
 
 ## Discord
 for questions and ideas join our discord.<br>
