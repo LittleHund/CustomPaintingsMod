@@ -24,9 +24,8 @@ for questions and ideas join our discord.<br>
 
 
 ## Latest Update
-<b><i><ins> update 1.1.9 </b></i></ins> <br>
-- changed folder that is checked from plugins to BepInEx
-- images can now be added to the config folder for the people who share profile codes
+<b><i><ins> update 1.1.11 </b></i></ins> <br>
+- fixed mod compatibility issues (specifically L_A_T_E mod, but hopefully other mods as well)
 
 
 ## Support
