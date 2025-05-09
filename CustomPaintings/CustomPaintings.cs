@@ -69,34 +69,37 @@ namespace CustomPaintings
         }
 
         // Patch method for replacing the paintings
-        [HarmonyPatch(typeof(LoadingUI), "LevelAnimationComplete")]
+        [HarmonyPatch(typeof(PlayerAvatar), "LoadingLevelAnimationCompletedRPC")]
         public class PaintingSwapPatch
         {
-
+            
             private static void Postfix()
-            {
+            {                
                 Task.Run(async () =>
                 {
-                    int waited = 0;
-                    int interval = 50;
+                    if (swapper.GetModState() == CustomPaintingsSwap.ModState.Client || swapper.GetModState() == CustomPaintingsSwap.ModState.Host)
+                    {
+                        int waited = 0;
+                        int interval = 50;
 
-                    // wait to receive a code
-                    while (!receivedSeed.HasValue && waited < maxWaitTimeMs)
-                    {
-                        await Task.Delay(interval);
-                        waited += interval;
-                    }
+                        // wait to receive a code
+                        while (!receivedSeed.HasValue && waited < maxWaitTimeMs)
+                        {
+                            await Task.Delay(interval);
+                            waited += interval;
+                        }
 
-                    if (receivedSeed.HasValue)
-                    {
-                        logger.LogInfo($"[Postfix] Client using received seed: {receivedSeed.Value}");
-                        oldreceivedSeed = ReceivedSeed;
-                        ReceivedSeed = receivedSeed.Value;
-                        receivedSeed = null; //reset receivedseed for while loop above to work correctly
-                    }
-                    else if (ReceivedSeed == oldreceivedSeed)
-                    {
-                        logger.LogWarning("[Postfix] Client did not receive seed in time. Proceeding without it.");
+                        if (receivedSeed.HasValue)
+                        {
+                            logger.LogInfo($"[Postfix] Client using received seed: {receivedSeed.Value}");
+                            oldreceivedSeed = ReceivedSeed;
+                            ReceivedSeed = receivedSeed.Value;
+                            receivedSeed = null; //reset receivedseed for while loop above to work correctly
+                        }
+                        else if (ReceivedSeed == oldreceivedSeed)
+                        {
+                            logger.LogWarning("[Postfix] Client did not receive seed in time. Proceeding without it.");
+                        }
                     }
                     
 
@@ -106,7 +109,7 @@ namespace CustomPaintings
 
 
 
-            }
+            }   
             
             private static void Prefix()
             {
