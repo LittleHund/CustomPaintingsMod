@@ -1,3 +1,6 @@
+## update 1.1.11
+- fixed mod compatibility issues (specifically L_A_T_E mod, but hopefully other mods as well)
+
 ## update 1.1.9
 - changed folder that is checked from plugins to BepInEx
 - images can now be added to the config folder for the people who share profile codes
