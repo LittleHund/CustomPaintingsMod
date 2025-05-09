@@ -108,7 +108,7 @@ namespace CustomPaintings
                 {
                     AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
                 }
-                else if (aspectRatio < 0.769f)
+                else if (aspectRatio < 6.0f / 7.0f) // paintings taller than 6x7 will be portraits
                 {
                     AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
                 }
