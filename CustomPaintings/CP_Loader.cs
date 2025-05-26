@@ -9,12 +9,13 @@ using UnityEngine;
 
 namespace CustomPaintings
 {
-    public class CustomPaintingsLoader
+    public class CP_Loader
     {
         //assign dedicated folder name
         private const string IMAGE_FOLDER_NAME = "CustomPaintings";
 
-        private readonly Logger logger;
+        private readonly CP_Logger logger;
+        private readonly CP_GifManager GifManager;
 
         //create a dictionary for the different image groups
         public Dictionary<string, List<Material>> MaterialGroups = new Dictionary<string, List<Material>>();
@@ -32,9 +33,11 @@ namespace CustomPaintings
         private int loadedcount = 1;
 
         // Constructor to initialize the logger
-        public CustomPaintingsLoader(Logger logger)
+        public CP_Loader(CP_Logger logger, CP_GifManager GifManager)
         {
             this.logger = logger;
+            this.GifManager = GifManager;
+            logger.LogInfo("CP_Loader initialized.");
         }
 
         // Load images from all plugins
@@ -81,7 +84,7 @@ namespace CustomPaintings
                 return;
             }
 
-            string[] validExtensions = { ".png", ".jpg", ".jpeg", ".bmp" };
+            string[] validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".gif", ".mp4" };
 
             var files = Directory
                 .EnumerateFiles(directoryPath, "*.*", SearchOption.AllDirectories)
@@ -96,28 +99,45 @@ namespace CustomPaintings
             for (int i = 0; i < files.Length; i++)
             {
                 string filePath = files[i];
-                Texture2D texture = LoadTextureFromFile(filePath);
-                if (texture == null)
-                {
-                    logger.LogWarning($"Failed to load image #{i + 1}: {filePath}");
-                    continue;
-                }
+                string fileExtension = Path.GetExtension(filePath).ToLower();
 
-                float aspectRatio = (float)texture.width / texture.height;
-                if (aspectRatio > 1.3f)
+                if (fileExtension == ".gif" || fileExtension == ".mp4")
                 {
-                    AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
-                }
-                else if (aspectRatio < 6.0f / 7.0f) // paintings taller than 6x7 will be portraits
-                {
-                    AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
+                    if (fileExtension == ".gif")                    {
+                        
+                        string outputPath = Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath) + "_gif.mp4");
+                        GifManager.ConvertGifToMp4(filePath, outputPath);
+                        continue;
+                    }                    
+                    continue;                    
+
+
                 }
                 else
-                {
-                    AddGrungeMaterial("Square", _LandscapeMaterial, texture);
-                }
+                {                    
+                    Texture2D texture = LoadTextureFromFile(filePath);
+                    if (texture == null)
+                    {
+                        logger.LogWarning($"Failed to load image #{i + 1}: {filePath}");
+                        continue;
+                    }
 
-                logger.LogInfo($"Loaded image #{loadedcount}: {Path.GetFileName(filePath)}");
+                    float aspectRatio = (float)texture.width / texture.height;
+                    if (aspectRatio > 1.3f)
+                    {
+                        AddGrungeMaterial("Landscape", _LandscapeMaterial, texture);
+                    }
+                    else if (aspectRatio < 6.0f / 7.0f) // paintings taller than 6x7 will be portraits
+                    {
+                        AddGrungeMaterial("Portrait", _PortraitMaterial, texture);
+                    }
+                    else
+                    {
+                        AddGrungeMaterial("Square", _LandscapeMaterial, texture);
+                    }
+
+                    logger.LogInfo($"Loaded image #{loadedcount}: {Path.GetFileName(filePath)}");                    
+                }
                 loadedcount++;
             }
         }
@@ -213,16 +233,16 @@ namespace CustomPaintings
 
         internal void BindConfigUpdates()
         {
-            CustomPaintingsConfig.Grunge.State.SettingChanged         += OnGrungeConfigOptionChanged;
-            CustomPaintingsConfig.Grunge.Intensity.SettingChanged     += OnGrungeConfigOptionChanged;
-            CustomPaintingsConfig.Grunge._BaseColor.SettingChanged    += OnGrungeConfigOptionChanged;
+            CP_Config.Grunge.State.SettingChanged         += OnGrungeConfigOptionChanged;
+            CP_Config.Grunge.Intensity.SettingChanged     += OnGrungeConfigOptionChanged;
+            CP_Config.Grunge._BaseColor.SettingChanged    += OnGrungeConfigOptionChanged;
 
-            CustomPaintingsConfig.Grunge._BaseColor.SettingChanged    += OnGrungeConfigOptionChanged;
-            CustomPaintingsConfig.Grunge._MainColor.SettingChanged    += OnGrungeConfigOptionChanged;
-            CustomPaintingsConfig.Grunge._CracksColor.SettingChanged  += OnGrungeConfigOptionChanged;
-            CustomPaintingsConfig.Grunge._OutlineColor.SettingChanged += OnGrungeConfigOptionChanged;
+            CP_Config.Grunge._BaseColor.SettingChanged    += OnGrungeConfigOptionChanged;
+            CP_Config.Grunge._MainColor.SettingChanged    += OnGrungeConfigOptionChanged;
+            CP_Config.Grunge._CracksColor.SettingChanged  += OnGrungeConfigOptionChanged;
+            CP_Config.Grunge._OutlineColor.SettingChanged += OnGrungeConfigOptionChanged;
 
-            CustomPaintingsConfig.Graphics.PointFiltering.SettingChanged       += OnPointFilteringConfigOptionChange;
+            CP_Config.Graphics.PointFiltering.SettingChanged       += OnPointFilteringConfigOptionChange;
         }
 
         internal void OnPointFilteringConfigOptionChange(object sender, EventArgs e)
@@ -235,7 +255,7 @@ namespace CustomPaintings
 
         internal void SetFilterMode(Texture texture)
         {
-            if (CustomPaintingsConfig.Graphics.PointFiltering.Value)
+            if (CP_Config.Graphics.PointFiltering.Value)
             { texture.filterMode = FilterMode.Point; }
             else
             { texture.filterMode = FilterMode.Trilinear; }
@@ -251,8 +271,8 @@ namespace CustomPaintings
         {
             logger.LogDebug($"Updating Grunge Material Parameters...");
 
-            bool grungeEnabled    = CustomPaintingsConfig.Grunge.State.Value;
-            float grungeIntensity = CustomPaintingsConfig.Grunge.Intensity.Value;
+            bool grungeEnabled    = CP_Config.Grunge.State.Value;
+            float grungeIntensity = CP_Config.Grunge.Intensity.Value;
             Color grungeColor     = new Color(1, 1, 1, grungeIntensity);
 
             logger.LogDebug($"Grunge state is [{grungeEnabled}]!");
@@ -270,17 +290,17 @@ namespace CustomPaintings
 
                 if (grungeEnabled)
                 {
-                    material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , CustomPaintingsConfig.Grunge._BaseColor.Value);
-                    material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , CustomPaintingsConfig.Grunge._MainColor.Value    * grungeColor);
-                    material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , CustomPaintingsConfig.Grunge._CracksColor.Value  * grungeColor);
-                    material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, CustomPaintingsConfig.Grunge._OutlineColor.Value * grungeColor);
+                    material.SetColor(CP_Config.Grunge._BaseColor.Definition.Key   ,    CP_Config.Grunge._BaseColor.Value);
+                    material.SetColor(CP_Config.Grunge._MainColor.Definition.Key   , CP_Config.Grunge._MainColor.Value    * grungeColor);
+                    material.SetColor(CP_Config.Grunge._CracksColor.Definition.Key , CP_Config.Grunge._CracksColor.Value  * grungeColor);
+                    material.SetColor(CP_Config.Grunge._OutlineColor.Definition.Key, CP_Config.Grunge._OutlineColor.Value * grungeColor);
                 }
                 else
                 {
-                    material.SetColor(CustomPaintingsConfig.Grunge._BaseColor.Definition.Key   , Color.clear);
-                    material.SetColor(CustomPaintingsConfig.Grunge._MainColor.Definition.Key   , Color.clear);
-                    material.SetColor(CustomPaintingsConfig.Grunge._CracksColor.Definition.Key , Color.clear);
-                    material.SetColor(CustomPaintingsConfig.Grunge._OutlineColor.Definition.Key, Color.clear);
+                    material.SetColor(CP_Config.Grunge._BaseColor.Definition.Key   , Color.clear);
+                    material.SetColor(CP_Config.Grunge._MainColor.Definition.Key   , Color.clear);
+                    material.SetColor(CP_Config.Grunge._CracksColor.Definition.Key , Color.clear);
+                    material.SetColor(CP_Config.Grunge._OutlineColor.Definition.Key, Color.clear);
                 }
             }
         }

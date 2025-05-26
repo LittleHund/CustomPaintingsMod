@@ -12,7 +12,7 @@ using BepInEx.Configuration;
 
 namespace CustomPaintings
 {
-    public class CustomPaintingsSwap
+    public class CP_Swapper
     {
         // create different states for the mod
         public enum ModState
@@ -22,10 +22,10 @@ namespace CustomPaintings
             SinglePlayer 
         }
 
-        private readonly Logger logger;
-        private readonly CustomPaintingsLoader loader;
-        private readonly CustomPaintingsGroupList grouper;
-        private static CustomPaintingsConfig configfile;
+        private readonly CP_Logger logger;
+        private readonly CP_Loader loader;
+        private readonly CP_GroupList grouper;
+        private static CP_Config configfile;
 
         //create seed variables      
         public static int HostSeed = 0;        
@@ -57,11 +57,12 @@ namespace CustomPaintings
         }
 
         // Constructor to initialize the logger and loader
-        public CustomPaintingsSwap(Logger logger, CustomPaintingsLoader loader, CustomPaintingsGroupList grouper)
+        public CP_Swapper(CP_Logger logger, CP_Loader loader, CP_GroupList grouper)
         {
             this.logger = logger;
             this.loader = loader; // Initialize loader instance
             this.grouper = grouper;
+            logger.LogInfo("CP_Swapper initialized.");
 
             // Log the current state on initialization
             logger.LogInfo($"Initial ModState: {currentState}");
@@ -95,17 +96,17 @@ namespace CustomPaintings
                 Seed = ReceivedSeed;
             }
 
-            if (CustomPaintingsConfig.ChaosMode.Value == true && CustomPaintingsConfig.HostControl.Value == false || ChaosState == true && CustomPaintingsConfig.HostControl.Value == true)
+            if (CP_Config.ChaosMode.Value == true && CP_Config.HostControl.Value == false && currentState != ModState.SinglePlayer|| ChaosState == true && CP_Config.HostControl.Value == true && currentState != ModState.SinglePlayer|| CP_Config.ChaosMode.Value == true && currentState == ModState.SinglePlayer)
             {
                 ImageMode = "Chaos";
             }
-            else if (CustomPaintingsConfig.ChaosMode.Value == false && CustomPaintingsConfig.HostControl.Value == false || ChaosState == false && CustomPaintingsConfig.HostControl.Value == true)
+            else if (CP_Config.ChaosMode.Value == false && CP_Config.HostControl.Value == false && currentState != ModState.SinglePlayer|| ChaosState == false && CP_Config.HostControl.Value == true && currentState != ModState.SinglePlayer|| CP_Config.ChaosMode.Value == false && currentState == ModState.SinglePlayer)
             {
-                if (CustomPaintingsConfig.RugsAndBanners.Value == true && CustomPaintingsConfig.HostControl.Value == false || RBState == true && CustomPaintingsConfig.HostControl.Value == true)
+                if (CP_Config.RugsAndBanners.Value == true && CP_Config.HostControl.Value == false && currentState != ModState.SinglePlayer || RBState == true && CP_Config.HostControl.Value == true && currentState != ModState.SinglePlayer|| CP_Config.RugsAndBanners.Value == true && currentState == ModState.SinglePlayer)
                 {
                     ImageMode = "RugsAndBanners";
                 }
-                else if (CustomPaintingsConfig.RugsAndBanners.Value == false && CustomPaintingsConfig.HostControl.Value == false || RBState == false && CustomPaintingsConfig.HostControl.Value == true)
+                else if (CP_Config.RugsAndBanners.Value == false && CP_Config.HostControl.Value == false && currentState != ModState.SinglePlayer|| RBState == false && CP_Config.HostControl.Value == true && currentState != ModState.SinglePlayer|| CP_Config.RugsAndBanners.Value == false && currentState == ModState.SinglePlayer)
                 {
                     ImageMode = "Normal";
                 }
@@ -122,7 +123,7 @@ namespace CustomPaintings
 
             int materialsChecked = 0;  // Count materials checked in the scene
 
-            if (CustomPaintingsConfig.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off" && CustomPaintingsConfig.HostControl.Value == true || CustomPaintingsConfig.HostControl.Value == false && CustomPaintingsConfig.SeperateImages.Value == false)
+            if (CP_Config.SeperateImages.Value == false && SeperateState == "Singleplayer" || SeperateState == "off" && CP_Config.HostControl.Value == true || CP_Config.HostControl.Value == false && CP_Config.SeperateImages.Value == false)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -136,7 +137,7 @@ namespace CustomPaintings
                             materialsChecked++;  // Increment checked materials count
                             string matName = materials[i].name.Trim();
 
-                            if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
+                            if (CP_GroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
                             {
 
                                 if (materials[i] != null && groupNames.Contains(ImageMode))
@@ -167,7 +168,7 @@ namespace CustomPaintings
                     }
                 }
             }
-            else if (CustomPaintingsConfig.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on" && CustomPaintingsConfig.HostControl.Value == true || CustomPaintingsConfig.HostControl.Value == false && CustomPaintingsConfig.SeperateImages.Value == true)
+            else if (CP_Config.SeperateImages.Value == true && SeperateState == "Singleplayer" || SeperateState == "on" && CP_Config.HostControl.Value == true || CP_Config.HostControl.Value == false && CP_Config.SeperateImages.Value == true)
             {
                 foreach (GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects())
                 {
@@ -181,7 +182,7 @@ namespace CustomPaintings
 
                             string matName = materials[i].name.Trim();
 
-                            if (CustomPaintingsGroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
+                            if (CP_GroupList.MaterialNameToGroup.TryGetValue(matName, out var groupNames))
                             {
 
                                 if (materials[i] != null && groupNames.Contains(ImageMode))

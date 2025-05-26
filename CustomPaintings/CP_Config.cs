@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CustomPaintings;
 
-public class CustomPaintingsConfig
+public class CP_Config
 {
     public static ConfigEntry<bool> HostControl;
     public static ConfigEntry<bool> SeperateImages;
@@ -35,10 +35,9 @@ public class CustomPaintingsConfig
         internal static ConfigEntry<bool> PointFiltering;
     }
 
-    public CustomPaintingsConfig()
+    public CP_Config()
     {
         ForceSwapKey = (KeyCode) System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("ForceSwapKey", "P"));
-
     }
 
     internal static void Init(ConfigFile config)

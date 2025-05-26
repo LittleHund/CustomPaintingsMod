@@ -6,23 +6,24 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
 using CustomPaintings;
-using static CustomPaintings.CustomPaintingsSwap;
+using static CustomPaintings.CP_Swapper;
 
 namespace CustomPaintings
 {
-    public class CustomPaintingsSync : MonoBehaviourPunCallbacks, IOnEventCallback
+    public class CP_Synchroniser : MonoBehaviourPunCallbacks, IOnEventCallback
     {
 
-        private readonly Logger logger;
+        private readonly CP_Logger logger;
 
         // assign a specific code to different events
         public const byte SeedEventCode = 1;
         public const byte HostSettingsCode = 2;
 
 
-        public CustomPaintingsSync(Logger logger)
+        public CP_Synchroniser(CP_Logger logger)
         {
             this.logger = logger;
+            logger.LogInfo("CP_Synchroniser initialized.");
         }
 
         public void SendSeed(int seed)

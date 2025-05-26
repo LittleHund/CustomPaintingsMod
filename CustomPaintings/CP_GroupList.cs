@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CustomPaintings
 {
-    public class CustomPaintingsGroupList
+    public class CP_GroupList
     {
-        private readonly Logger logger;
+        private readonly CP_Logger logger;
 
-        public CustomPaintingsGroupList(Logger logger)
+        public CP_GroupList(CP_Logger logger)
         {
             this.logger = logger;
         }
@@ -65,6 +65,7 @@ namespace CustomPaintings
         { "Bathroom Rug"                                ,   new List<string>    {"Square"       , "RugsAndBanners"  , "Chaos" } },
         { "Rug Plain Red"                               ,   new List<string>    {"Landscape"    , "RugsAndBanners"  , "Chaos" } },
         { "Wizard Wall Flag"                            ,   new List<string>    {"Portrait"     , "RugsAndBanners"  , "Chaos" } },
+        { "Rug Optimized"                               ,   new List<string>    {"Portrait"     , "RugsAndBanners"  , "Chaos" } },
 	
         // Chaos group	
         { "regular material 01"                         ,   new List<string>    {"Square"       , "Chaos" } },

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using BepInEx;
 using HarmonyLib;
-using static CustomPaintings.CustomPaintingsSwap;
+using static CustomPaintings.CP_Swapper;
 using Photon.Pun;
 using System.Threading.Tasks;
 using BepInEx.Configuration;
@@ -16,12 +16,13 @@ namespace CustomPaintings
     public class CustomPaintings : BaseUnityPlugin
     {
         // create instances for the different class files
-        private static Logger logger;
-        private static CustomPaintingsLoader loader;
-        private static CustomPaintingsSwap swapper;
-        private static CustomPaintingsSync sync;
-        private static CustomPaintingsGroupList grouper;
-        private static CustomPaintingsConfig configfile;
+        private static CP_Logger logger;
+        private static CP_Loader loader;
+        private static CP_Swapper swapper;
+        private static CP_Synchroniser sync;
+        private static CP_GroupList grouper;
+        private static CP_Config configfile;
+        private static CP_GifManager GifManager;
 
         public static int? receivedSeed = null;
         public static int? oldreceivedSeed = null;
@@ -35,27 +36,30 @@ namespace CustomPaintings
         {
 
             // Initialize Logger first
-            logger = new Logger("CustomPaintings");
+            logger = new CP_Logger("CustomPaintings");
             logger.LogInfo("CustomPaintings mod initialized.");
 
+            // Initialize GifManager
+            GifManager = new CP_GifManager(logger);
+
             // Initialize configurable settings
-            CustomPaintingsConfig.Init(Config);
+            CP_Config.Init(Config);
 
             // Initialize Loader second
-            loader = new CustomPaintingsLoader(logger);
+            loader = new CP_Loader(logger, GifManager);
             loader.LoadImagesFromAllPlugins();
 
             // Initialize grouper , pass logger as dependency
-            configfile = new CustomPaintingsConfig();
+            configfile = new CP_Config();
 
             // Initialize grouper , pass logger as dependency
-            grouper = new CustomPaintingsGroupList(logger);
+            grouper = new CP_GroupList(logger);
 
             // Initialize Swapper last, pass loader as dependency
-            swapper = new CustomPaintingsSwap(logger, loader, grouper);
+            swapper = new CP_Swapper(logger, loader, grouper);
 
             // Initialize syncer
-            sync = new CustomPaintingsSync(logger);
+            sync = new CP_Synchroniser(logger);
 
             harmony.PatchAll();
         }
@@ -77,7 +81,7 @@ namespace CustomPaintings
             {                
                 Task.Run(async () =>
                 {
-                    if (swapper.GetModState() == CustomPaintingsSwap.ModState.Client || swapper.GetModState() == CustomPaintingsSwap.ModState.Host)
+                    if (swapper.GetModState() == CP_Swapper.ModState.Client || swapper.GetModState() == CP_Swapper.ModState.Host)
                     {
                         int waited = 0;
                         int interval = 50;
@@ -114,7 +118,7 @@ namespace CustomPaintings
             private static void Prefix()
             {
 
-                if (swapper.GetModState() == CustomPaintingsSwap.ModState.Client)
+                if (swapper.GetModState() == CP_Swapper.ModState.Client)
                 {
 
                     PhotonNetwork.AddCallbackTarget(sync); // Subscribe to Photon events
@@ -123,7 +127,7 @@ namespace CustomPaintings
 
 
 
-                if (swapper.GetModState() == CustomPaintingsSwap.ModState.Host)
+                if (swapper.GetModState() == CP_Swapper.ModState.Host)
                 {
 
                     HostSeed = UnityEngine.Random.Range(0, int.MaxValue);
@@ -132,14 +136,14 @@ namespace CustomPaintings
 
                     sync.SendSeed(HostSeed);
 
-                    if (CustomPaintingsConfig.SeperateImages.Value == true)
+                    if (CP_Config.SeperateImages.Value == true)
                     {
-                        sync.SendHostSettings("on", CustomPaintingsConfig.RugsAndBanners.Value, CustomPaintingsConfig.ChaosMode.Value);
+                        sync.SendHostSettings("on", CP_Config.RugsAndBanners.Value, CP_Config.ChaosMode.Value);
                     }
 
-                    else if (CustomPaintingsConfig.SeperateImages.Value == false)
+                    else if (CP_Config.SeperateImages.Value == false)
                     {
-                        sync.SendHostSettings("off", CustomPaintingsConfig.RugsAndBanners.Value, CustomPaintingsConfig.ChaosMode.Value);
+                        sync.SendHostSettings("off", CP_Config.RugsAndBanners.Value, CP_Config.ChaosMode.Value);
                     }
 
                 }
@@ -156,9 +160,9 @@ namespace CustomPaintings
             private static void Prefix()
             {
 
-                if (swapper.GetModState() != CustomPaintingsSwap.ModState.Host)
+                if (swapper.GetModState() != CP_Swapper.ModState.Host)
                 {
-                    swapper.SetState(CustomPaintingsSwap.ModState.Client);
+                    swapper.SetState(CP_Swapper.ModState.Client);
 
                 }
             }
@@ -170,7 +174,7 @@ namespace CustomPaintings
         {
             private static bool Prefix()
             {
-                swapper.SetState(CustomPaintingsSwap.ModState.Host);
+                swapper.SetState(CP_Swapper.ModState.Host);
 
                 return true; // Continue execution of the original method
 
@@ -187,7 +191,7 @@ namespace CustomPaintings
             {
                 PhotonNetwork.RemoveCallbackTarget(sync); // Unsubscribe to Photon events
 
-                swapper.SetState(CustomPaintingsSwap.ModState.SinglePlayer);
+                swapper.SetState(CP_Swapper.ModState.SinglePlayer);
                 SeperateState = "Singleplayer";
             }
         }
