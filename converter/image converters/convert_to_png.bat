@@ -2,7 +2,7 @@
 
 :: Set the source and destination folder paths
 set sourceFolder=ImagesToConvert
-set destFolder=..\..\CustomPaintings
+set destFolder=..\CustomPaintings
 
 :: Get the name of the batch file so we can avoid deleting it
 set batFile=%~nx0

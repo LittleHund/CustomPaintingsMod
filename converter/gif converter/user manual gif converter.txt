@@ -1,0 +1,16 @@
+to use a converter
+- make a converter folder in any folder you'd like to add a CustomPaintings folder to (to be able to send profile codes, the config folder is recommended)
+- download ffmpeg:
+	- go to https://www.gyan.dev/ffmpeg/builds/#release-builds
+	- download ffmpeg-release-full.7z
+	- extract the ffmpeg.exe file from the bin folder
+	- put ffmpeg.exe in the same folder as the converter.bat
+
+- create a folder called GifsToConvert in the converter folder
+- put all images you want to convert in this folder
+- launch the converter of choise
+- done
+
+images will automatically be moved to the CustomImages folder and renamed to numbers from 1 up
+images in the ImagesToConvert folder will be deleted
+

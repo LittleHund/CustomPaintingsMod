@@ -1,5 +1,5 @@
 to use a converter
-- put the converter folder in any folder you'd like to add a CustomPaintings folder to (not in the CustomPaintings folder)
+- make a converter folder in any folder you'd like to add a CustomPaintings folder to (to be able to send profile codes, the config folder is recommended)
 - create a folder called ImagesToConvert in the converter folder
 - put all images you want to convert in this folder
 - launch the converter of choise
