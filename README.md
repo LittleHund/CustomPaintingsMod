@@ -24,7 +24,7 @@ for questions and ideas join our discord.<br>
 
 
 ## Latest Update
-<b><i><ins> update 1.1.12 </b></i></ins> <br>
+<b><i><ins> update 1.1.13 </b></i></ins> <br>
 - added all new paintings from museum update
 
 

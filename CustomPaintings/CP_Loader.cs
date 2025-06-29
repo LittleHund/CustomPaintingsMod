@@ -15,7 +15,7 @@ namespace CustomPaintings
         private const string IMAGE_FOLDER_NAME = "CustomPaintings";
 
         private readonly CP_Logger logger;
-        private readonly CP_GifManager GifManager;
+        private readonly CP_GifVidManager GifManager;
 
         //create a dictionary for the different image groups
         public Dictionary<string, List<Material>> MaterialGroups = new Dictionary<string, List<Material>>();
@@ -33,7 +33,7 @@ namespace CustomPaintings
         private int loadedcount = 1;
 
         // Constructor to initialize the logger
-        public CP_Loader(CP_Logger logger, CP_GifManager GifManager)
+        public CP_Loader(CP_Logger logger, CP_GifVidManager GifManager)
         {
             this.logger = logger;
             this.GifManager = GifManager;
@@ -84,7 +84,7 @@ namespace CustomPaintings
                 return;
             }
 
-            string[] validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".gif", ".mp4" };
+            string[] validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".mp4" };
 
             var files = Directory
                 .EnumerateFiles(directoryPath, "*.*", SearchOption.AllDirectories)
@@ -101,16 +101,9 @@ namespace CustomPaintings
                 string filePath = files[i];
                 string fileExtension = Path.GetExtension(filePath).ToLower();
 
-                if (fileExtension == ".gif" || fileExtension == ".mp4")
-                {
-                    if (fileExtension == ".gif")                    {
-                        
-                        string outputPath = Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath) + "_gif.mp4");
-                        GifManager.ConvertGifToMp4(filePath, outputPath);
-                        continue;
-                    }                    
+                if (ffileExtension == ".mp4")
+                {                     
                     continue;                    
-
 
                 }
                 else

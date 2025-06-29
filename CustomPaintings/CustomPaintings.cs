@@ -12,7 +12,7 @@ using System;
 
 namespace CustomPaintings
 {
-    [BepInPlugin("UnderratedJunk.CustomPaintings", "CustomPaintings", "1.1.11")]
+    [BepInPlugin("UnderratedJunk.CustomPaintings", "CustomPaintings", "1.2.0")]
     public class CustomPaintings : BaseUnityPlugin
     {
         // create instances for the different class files
@@ -22,7 +22,7 @@ namespace CustomPaintings
         private static CP_Synchroniser sync;
         private static CP_GroupList grouper;
         private static CP_Config configfile;
-        private static CP_GifManager GifManager;
+        private static CP_GifVidManager GifManager;
 
         public static int? receivedSeed = null;
         public static int? oldreceivedSeed = null;
@@ -40,7 +40,7 @@ namespace CustomPaintings
             logger.LogInfo("CustomPaintings mod initialized.");
 
             // Initialize GifManager
-            GifManager = new CP_GifManager(logger);
+            GifManager = new CP_GifVidManager(logger);
 
             // Initialize configurable settings
             CP_Config.Init(Config);
