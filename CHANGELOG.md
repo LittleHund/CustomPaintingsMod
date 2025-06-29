@@ -1,3 +1,6 @@
+## update 1.1.12
+- added all new paintings from museum update
+
 ## update 1.1.11
 - fixed mod compatibility issues (specifically L_A_T_E mod, but hopefully other mods as well)
 

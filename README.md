@@ -24,8 +24,8 @@ for questions and ideas join our discord.<br>
 
 
 ## Latest Update
-<b><i><ins> update 1.1.11 </b></i></ins> <br>
-- fixed mod compatibility issues (specifically L_A_T_E mod, but hopefully other mods as well)
+<b><i><ins> update 1.1.12 </b></i></ins> <br>
+- added all new paintings from museum update
 
 
 ## Support
